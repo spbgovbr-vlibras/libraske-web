@@ -1,15 +1,14 @@
-import { Route, BrowserRouter } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import React from 'react'
 
-import Home from './pages/Home'
+import Routes from './routes'
 
-const Routes = () => {
+const App = () => {
   return (
-    <BrowserRouter>
-      <Route component={Home} path="/" exact />
-      {/* <Route component={CreatePoint} path="/create-point"/> */}
-    </BrowserRouter>
+    <Router>
+      <Routes />
+    </Router>
   )
 }
 
-export default Routes
+export default App
