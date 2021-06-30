@@ -1,0 +1,25 @@
+button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 18px;
+
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  width: 13rem;
+
+  background: rgba(79, 236, 106, 0.2);
+  border-radius: 12px;
+
+  border: 2px solid #4fec6a;
+
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #4fec6a 0%, #20cb3d 100%);
+  box-shadow: 0px 25px 40px rgba(13, 150, 41, 0.35), inset 0px 0px 50px #5df479;
+}
