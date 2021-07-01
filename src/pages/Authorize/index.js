@@ -46,17 +46,8 @@ const Authorize = () => {
 
   return (
     <div id="page-authorize">
-      <div id="logo">
-        <span className="title">LIBRASKÊ</span>
-        <span className="subtitle">Karaokê em Libras</span>
-      </div>
-
       <img className="spin" src={Spin} alt="Carregando" />
       <p className="text">Gerando autorização de acesso...</p>
-
-      <div id="footer">
-        <span>© Libraskê | Ministério da Economia - LAVID</span>
-      </div>
     </div>
   );
 };
