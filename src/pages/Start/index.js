@@ -7,7 +7,7 @@ const Start = () => {
   };
 
   return (
-    <div id="wrapper">
+    <div id="page-start">
         <Button title={"Conta Gov.br"} onClick={govAuth}/>
     </div>
   );

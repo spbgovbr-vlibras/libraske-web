@@ -45,7 +45,7 @@ const Authorize = () => {
     });
 
   return (
-    <div id="wrapper">
+    <div id="page-authorize">
       <div id="logo">
         <span className="title">LIBRASKÊ</span>
         <span className="subtitle">Karaokê em Libras</span>
