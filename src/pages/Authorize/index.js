@@ -3,7 +3,7 @@ import axios from "axios";
 import jwt from "jsonwebtoken";
 import jwtToPem from "jwk-to-pem";
 
-import Spin from "../../assets/spin.svg";
+import Loading from "../../assets/loading.svg"
 
 const Authorize = () => {
   //obtains authorization code from URL
@@ -46,8 +46,8 @@ const Authorize = () => {
 
   return (
     <div id="page-authorize">
-      <img className="spin" src={Spin} alt="Carregando" />
-      <p className="text">Gerando autorização de acesso...</p>
+      <img className="loading" src={Loading} alt="Carregando" />
+      <p className="text">Autenticando...</p>
     </div>
   );
 };

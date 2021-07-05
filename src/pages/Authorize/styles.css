@@ -2,9 +2,6 @@
   width: 100vw;
   height: 100vh;
   background-color: #1c1e4c;
-  background-image: url("../../assets/circles_background.svg");
-  background-position: center;
-  background-size: cover;
 
   display: flex;
   align-items: center;
@@ -14,11 +11,11 @@
 
 .text {
   font-family: "M PLUS Rounded 1c", sans-serif;
-  font-size: 1.5rem;
-  font-weight: 300;
+  font-size: 1.6rem;
   color: var(--ice_white);
+  margin-top: 8px;
 }
 
-.spin {
-  width: 6rem;
+.loading {
+  width: 7rem;
 }
