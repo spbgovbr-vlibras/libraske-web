@@ -3,12 +3,14 @@ import axios from "axios";
 import jwt from "jsonwebtoken";
 import jwtToPem from "jwk-to-pem";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import Loading from "../../assets/loading.svg";
 import { storeAuth } from "../../store/modules/auth/actions";
 
 const Authorize = () => {
   const dispatch = useDispatch();
+  let history = useHistory();
 
   //obtains authorization code from URL
   const code = window.location.search.replace("?code=", "");
@@ -54,6 +56,7 @@ const Authorize = () => {
       };
 
       dispatch(storeAuth(data));
+      history.push("/play");
     })
     .catch((err) => {
       //TODO-HOMOLOG: INFORMAR ERRO COM TOAST E RETORNAR PARA HOME
