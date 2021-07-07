@@ -1,4 +1,4 @@
-button {
+.action-button {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,7 +19,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.action-button:hover {
   background: linear-gradient(135deg, #4fec6a 0%, #20cb3d 100%);
   box-shadow: 0px 25px 40px rgba(13, 150, 41, 0.35), inset 0px 0px 50px #5df479;
 }
