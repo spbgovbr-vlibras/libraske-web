@@ -2,10 +2,14 @@ import "./styles.css";
 import axios from "axios";
 import jwt from "jsonwebtoken";
 import jwtToPem from "jwk-to-pem";
+import { useDispatch } from "react-redux";
 
-import Loading from "../../assets/loading.svg"
+import Loading from "../../assets/loading.svg";
+import { storeAuth } from "../../store/modules/auth/actions";
 
 const Authorize = () => {
+  const dispatch = useDispatch();
+
   //obtains authorization code from URL
   const code = window.location.search.replace("?code=", "");
 
@@ -16,7 +20,7 @@ const Authorize = () => {
     console.log(keys);
   });
 
-  //creates encoded data for authorization header
+  //creates encoded data for authorization request header
   const encodedAuth = Buffer.from(
     `${process.env.REACT_APP_CLIENT_ID}:${process.env.REACT_APP_CLIENT_SECRET}`
   ).toString("base64");
@@ -40,8 +44,20 @@ const Authorize = () => {
       var decoded = jwt.verify(response.data.id_token, jwtToPem(keys));
       let cpf = decoded.sub;
 
-      console.log(decoded.name);
-      console.log(cpf);
+      let data = {
+        name: decoded.name,
+        email: decoded.email,
+        cpf: cpf,
+        access_token: jwt.sign(cpf, process.env.REACT_APP_ACCESS_SECRET),
+        refresh_token: jwt.sign(cpf, process.env.REACT_APP_REFRESH_SECRET),
+        id_token: response.data.id_token,
+      };
+
+      dispatch(storeAuth(data));
+    })
+    .catch((err) => {
+      //TODO-HOMOLOG: INFORMAR ERRO COM TOAST E RETORNAR PARA HOME
+      console.log("erro na autenticação");
     });
 
   return (
