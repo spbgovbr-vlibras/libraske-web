@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 
 import Loading from "../../assets/loading.svg";
 import { storeAuth } from "../../store/modules/auth/actions";
+import { toast } from "react-toastify";
 
 const Authorize = () => {
   const dispatch = useDispatch();
@@ -59,8 +60,9 @@ const Authorize = () => {
       history.push("/play");
     })
     .catch((err) => {
-      //TODO-HOMOLOG: INFORMAR ERRO COM TOAST E RETORNAR PARA HOME
-      console.log("erro na autenticação");
+      toast.error(<div>Algo deu errado na autenticação. <br/><br/> Por favor, realize o login novamente.</div>, {
+        onClose: () => history.push("/"),
+      });
     });
 
   return (
