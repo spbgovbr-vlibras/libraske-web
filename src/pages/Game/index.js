@@ -1,5 +1,5 @@
 import "./styles.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Unity, { UnityContext } from "react-unity-webgl";
@@ -7,6 +7,9 @@ import Unity, { UnityContext } from "react-unity-webgl";
 const Game = () => {
   const auth = useSelector((state) => state.auth);
   let history = useHistory();
+
+  const [logoutHover, setlogoutHover] = useState(false);
+  const [logoutModal, setlogoutModal] = useState(false);
 
   const unityContext = new UnityContext({
     loaderUrl: "unity/react.loader.js",
@@ -44,9 +47,28 @@ const Game = () => {
         unityContext={unityContext}
         style={{ width: "100vw", height: "100vh" }}
       />
-      <button id="corner-button" onClick={logout}>
-        <i className="logout-icon" />
-      </button>
+      <div id="corner-items">
+        {logoutHover && <span className="logout-text">Sair</span>}
+        <button
+          id="corner-button"
+          onClick={() => setlogoutModal(true)}
+          onMouseEnter={() => setlogoutHover(true)}
+          onMouseLeave={() => setlogoutHover(false)}
+        >
+          <i className="logout-icon" />
+        </button>
+      </div>
+      {logoutModal && (
+        <div className="modal-wrapper">
+          <div id="logout-modal">
+            <span id="logout-title">DESEJA MESMO SAIR?</span>
+            <div className="button-row">
+              <button className="fill-button" onClick={logout}>Sim</button>
+              <button className="fill-button" onClick={() => setlogoutModal(false)}>Não</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

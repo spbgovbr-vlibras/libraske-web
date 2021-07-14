@@ -1,7 +1,7 @@
 #page-game {
   width: 100vw;
   height: 100vh;
-  background-color: #1C1E4C;
+  background-color: #1c1e4c;
 
   display: flex;
   align-items: center;
@@ -9,7 +9,7 @@
   flex-direction: column;
 }
 
-#corner-button {
+#corner-items {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -17,13 +17,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
-  width: 3.5rem;
-  height: 3.5rem;
+#corner-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 3.8rem;
+  height: 3.8rem;
 
   background: #1c1e4d;
   border-radius: 30px 0px 0px 0px;
-  
+
   cursor: pointer;
 }
 
@@ -32,4 +38,78 @@
   margin-left: 8px;
   margin-top: 4px;
   width: 2rem;
+}
+
+.logout-text {
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  background: #1c1e4d;
+  border-radius: 53px;
+  padding: 6px 22px;
+  margin-right: 8px;
+}
+
+.modal-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#logout-modal {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  align-items: center;
+  background: #ffffff;
+  padding: 32px 28px;
+  border-radius: 8px;
+}
+
+#logout-title {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #1C1E4C;
+}
+
+.button-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 14px;
+}
+
+.fill-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 24px;
+  margin: 3.6px;
+
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+
+  background: linear-gradient(135deg, #4fec6a 0%, #20cb3d 100%);
+  border-radius: 100px;
+
+  color: #ffffff;
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.fill-button:hover {
+  padding: 10px 26px;
+  font-size: 1.5rem;
+  margin: 0;
 }
