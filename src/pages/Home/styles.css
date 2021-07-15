@@ -20,27 +20,34 @@
 
 header {
     background-color: var(--header-color);
-    padding: 2rem 5.43rem;
-
     font-family: 'M PLUS Rounded 1c', sans-serif;
     line-height: 100%;
-
+    
+    position: fixed;
+    width: 100vw;
+    height: 4rem;
     display: flex;
     justify-content: space-between; 
     align-items: center;
     text-transform: uppercase;
-
+    z-index: 1;
+    
+    filter: opacity(0.9);
+    backdrop-filter: blur(0.4rem);
+    box-shadow: 0px -10px 30px black;
     text-shadow: 0px 15.7534px 25.2055px rgba(13, 150, 41, 0.2);
 }
 
 header .libraske-header{
+    margin-left: 20vw;
     flex-direction: row;
     font-weight: 800;
     font-size: 1.125rem;
     color: var(--green_);
 }
 
-header .options{  
+header .options{ 
+    margin-right: 18vw; 
     color: var(--ice_white);
     font-weight: 500;
     font-size: 0.875rem;
@@ -56,7 +63,7 @@ header .options a:first-child{
 }  
 
 #page-home .main-content {
-    padding: 9rem 0 6rem;
+    padding: 11rem 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -136,8 +143,16 @@ header .options a:first-child{
     margin: 1.25rem 0 0 1.5rem;
 }
 
-#page-home .main-content .realizadores img {
-    margin: 0.5rem 2rem;
+#page-home .main-content .realizadores .logos_realizadores_container{
+    margin: 0.5rem 1.5rem 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#page-home .main-content .realizadores .logos_realizadores_container img{
+    margin: 0 0.5rem;
 }
 
 #page-home .main-content .projeto{
@@ -329,16 +344,27 @@ header .options a:first-child{
     gap: 1rem;
 }
 
-@media (max-width: 62rem) {
+
+@media (max-width: 70rem) {
     #page-home {
         height: 192rem;
         width: auto;
         margin: auto;
     }
-    header{
-        padding: 2rem 2.5rem;
+    /* header{
+        gap: 4rem; 
     }
-    
+
+    header .libraske-header{
+        margin-left: 8rem;
+    }
+    header .options{
+        margin-right: 8rem;
+    } */
+
+    #page-home .main-content{
+        padding: 11rem 0 0;
+    }
 
     #page-home .main-content .main {
         display: flex;
@@ -362,22 +388,33 @@ header .options a:first-child{
         align-items: center; 
     }
     
-    #page-home .main-content .realizadores {
+    #page-home .main-content .realizadores{
+        width: 22.5rem;
+        height: 12.68rem;
+        
         display: flex;
         flex-direction: column;
-
-        height: 4.75rem;
-        width: 28rem;
-        margin-left: 1rem;
-        margin-right: 1rem;
-
-        border-radius: 1rem;
+        align-items: center;
     }
-    #page-home .main-content .realizadores img{
-        min-width: 18rem;
-        margin-left: 1rem;
-        margin-right: 1rem;
+    
+    #page-home .main-content .realizadores .logos_realizadores_container{
+        margin: 0.5rem 1.5rem 2rem;
+        display: flex;
+        flex-direction: column;
     }
+    #page-home .main-content .realizadores .logos_realizadores_container div{
+        display: flex;
+        flex-direction: row;
+        margin-top: 1rem;
+    }
+    #page-home .main-content .realizadores span{
+        margin: 1.25rem 0 0;
+    }
+    
+    #page-home .main-content .realizadores .logos_realizadores_container img{
+        margin: 0 0.5rem;
+    }
+
     #page-home .main-content .projeto{
         flex-direction: column;
         align-items: center;
@@ -452,29 +489,29 @@ header .options a:first-child{
     }
 }
 
-@media (max-width: 30rem) {
+@media (max-width: 35rem) {
     #page-home {
-        height: 195rem;
+        height: 200rem;
     }
     header{
-        padding: 1.5rem 1.75rem;
+        gap: 1rem;
+    }
+    header .libraske-header{
+        margin-left: 1.5rem;
+    }
+    header .options{
+        margin-right: 1.75rem;
     }
     #page-home .main-content {
-        padding: 4rem 0 0;
-    }
-
-    #page-home .main-content .realizadores {
-        max-width: 95vw;
-        margin: 0 0 4rem 0;
-    }
-    #page-home .main-content .realizadores img{
-        max-width: 90vw;
-        margin: 0.5rem 0.75rem 0;
+        padding: 7rem 0 0;
     }
 }
 
-@media (min-width: 2500px) {
-    header{
-        padding: 2rem 40rem 2rem 44rem;
+@media (min-width: 2560px) {
+    header .libraske-header{
+        margin-left: 28vw;
     }
-}
+    header .options{
+        margin-right: 28vw;
+    }
+} 

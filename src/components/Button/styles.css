@@ -1,25 +1,116 @@
-.action-button {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 4px 18px;
+.buttons button{
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    color: white;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 1.5rem;
+    line-height: 100%;
 
-  font-family: "M PLUS Rounded 1c", sans-serif;
-  font-size: 1.5rem;
-  font-weight: 300;
-  width: 13rem;
+    border: 0.1875rem solid var(--green_);
+    border-radius: 3rem;
+    background-color: transparent;
 
-  background: rgba(79, 236, 106, 0.2);
-  border-radius: 12px;
-
-  border: 2px solid #4fec6a;
-
-  color: white;
-  cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-.action-button:hover {
-  background: linear-gradient(135deg, #4fec6a 0%, #20cb3d 100%);
-  box-shadow: 0px 25px 40px rgba(13, 150, 41, 0.35), inset 0px 0px 50px #5df479;
+
+.buttons .button_icons:hover{
+    background-color: var(--green_);
+    box-shadow: 0px 25px 40px rgba(13, 150, 41, 0.35);
+    transform: scale(1.05);
+}
+
+.buttons .normal{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+}
+
+.buttons .normal:hover{
+    background-color: var(--green_);
+    box-shadow: 0px 25px 40px rgba(13, 150, 41, 0.35);
+    transform: scale(1.2);
+}
+
+.buttons .button_icons {
+    width: 15.125rem;
+    height: 3.5rem;
+    gap: 1rem;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 1.5rem;
+
+    font-weight: 800;
+    line-height: 100%;
+}
+
+.buttons .button_icons img{
+    height: 1.25rem;
+    width: 1.5rem;
+}
+
+.buttons .entrar {
+    height: 3.5rem;
+    width: 17.375rem;
+}
+
+.buttons .entrar:hover{
+    background-color: var(--green_);
+    box-shadow: 0px 25px 40px rgba(13, 150, 41, 0.35);
+    transform: scale(1.05);
+}
+
+.buttons .voltar {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    height: 2.75rem;
+    width: 7.9rem;
+    padding: 0 1.25rem 0 0.5rem;
+    left: 2rem;
+    top: 2rem;
+
+    font-size: 1rem;
+
+}
+
+.buttons .voltar:hover{
+    background-color: var(--green_);
+    box-shadow: 0px 25px 40px rgba(13, 150, 41, 0.35);
+    transform: scale(1.05);
+}
+
+@media (max-width: 35rem) {
+    .buttons .voltar {
+        height: 2.5rem;
+        width: 2.5rem;
+        padding: 0;
+        left: 1rem;
+        top: 2rem;
+    
+        font-size: 1rem;
+    }
+    .buttons .voltar div{
+        width: 0;
+        color: transparent;
+    }
+    .buttons .entrar {
+        height: 2.75rem;
+        width: 14rem;
+    }
+}
+
+@media (max-height: 35rem) {
+    .buttons .voltar {
+        height: 2.25rem;
+        width: 7rem;
+        left: 1rem;
+        top: 1rem;    
+    }
 }

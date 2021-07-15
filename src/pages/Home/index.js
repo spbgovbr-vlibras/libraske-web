@@ -1,8 +1,12 @@
 import React from 'react'
 import './styles.css'
+import { Link } from 'react-router-dom'
 import Icaro from '../../assets/Icaro.svg'
-import Iniciar from '../../assets/iniciar.svg'
-import Realizadores from '../../assets/realizadores.svg'
+import CamaraLogo from '../../assets/camara_logo.svg'
+import UfpbLogo from '../../assets/ufpb_logo.svg'
+import LavidLogo from '../../assets/lavid_logo.svg'
+import RnpLogo from '../../assets/rnp_logo.svg'
+import MinisterioLogo from '../../assets/ministerio_logo.svg'
 import Icon from '../../assets/icon.svg'
 import Insta from '../../assets/insta.svg'
 import Facebook from '../../assets/facebook.svg'
@@ -13,6 +17,7 @@ import IconBody from '../../assets/icon_body.svg'
 import IcaroCirculo from '../../assets/Icaro_circulo.svg'
 import IconGreen from '../../assets/icon_green.svg'
 import NotebookImg from '../../assets/notebook.svg'
+import Button from '../../components/Button'
 
 const Home = () => {
 	return (
@@ -22,7 +27,7 @@ const Home = () => {
 					<div className="libraske-header">LIBRASKÊ</div>
 					<div className="options">
 						<a href="http://www.google.com">O PROJETO</a>
-						<a href="http://www.google.com">VLIBRAS</a>
+						<a href="https://www.gov.br/governodigital/pt-br/vlibras">VLIBRAS</a>
 					</div>
 				</header>
 				<div className="main-content">
@@ -35,15 +40,25 @@ const Home = () => {
 							<div>
 								<span className="title">LIBRASKÊ</span>
 								<span className="subtitle">Karaokê em Libras</span>
-								<a href="http://www.google.com">
-									<img src={Iniciar} alt="Iniciar" />
-								</a>
+								<Link to="/access" style={{ textDecoration: 'none' }}>
+									<Button text="Acessar" type="acessar" />
+								</Link>
 							</div>
 						</div>
 					</div>
 					<div className="realizadores">
 						<span>Realizadores</span>
-						<img src={Realizadores} alt="Realizadores" />
+						<div className="logos_realizadores_container">
+							<img src={MinisterioLogo} alt="Logo Ministério da Economia" />
+							<div>
+								<img src={CamaraLogo} alt="Logo Câmara dos Deputados" />
+								<img src={LavidLogo} alt="Logo Lavid" />
+							</div>
+							<div>
+								<img src={UfpbLogo} alt="Logo Ufpb" />
+								<img src={RnpLogo} alt="Logo RNP" />
+							</div>
+						</div>
 					</div>
 					<div className="projeto">
 						<div className="sobre">
@@ -111,9 +126,9 @@ const Home = () => {
 						2020 Vlibras
 					</div>
 					<div className="social">
-						<a href="http://www.instagram.com"><img src={Insta} alt="Logo Instagram" /></a>
-						<a href="http://www.facebook.com"><img src={Facebook} alt="Logo Facebook" /></a>
-						<a href="http://www.youtube.com"><img src={Youtube} alt="Logo Youtube" /></a>
+						<a href="https://www.instagram.com/vlibrasoficial/" target="_blank" rel="noreferrer"><img src={Insta} alt="Logo Instagram" /></a>
+						<a href="https://www.facebook.com/vlibras" target="_blank" rel="noreferrer"><img src={Facebook} alt="Logo Facebook" /></a>
+						<a href="https://www.youtube.com/channel/UCF94lq7TwAu5OmlwIu44qpA" target="_blank" rel="noreferrer"><img src={Youtube} alt="Logo Youtube" /></a>
 					</div>
 				</footer >
 			</div >
