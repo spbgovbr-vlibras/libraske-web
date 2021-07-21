@@ -18,7 +18,7 @@ const Access = () => {
   }
 
   function refreshPage() {
-    window.location.reload()
+    setGuest(false)
   }
 
   return (
@@ -44,14 +44,14 @@ const Access = () => {
                     <Button text="Conta Gov.br" icon="GovIcon" />
                   </div>
                   <div onClick={handleGuest}>
-                    <Button text="Convidado" icon="GuestIcon" />
+                    <Button text="Visitante" icon="GuestIcon" />
                   </div>
                 </div>
               </>
             ) :
             (
               <>
-                <span>Convidado</span>
+                <span>Visitante</span>
                 <div className="guest_container">
 
                   <div className="guest_input">
@@ -68,14 +68,15 @@ const Access = () => {
       </div>
       {guest &&
         <div className="guest_mode">
-          <span>No modo convidado sua pontuação não será armazenada.<br />
-            Para isso, utilize a conta </span>
-          <span className="govbr" onClick={govAuth}>GOV.BR</span>
+          <div> No modo convidado sua pontuação não será armazenada. </div>
+          <div> Para isso, utilize a conta &nbsp;
+            <span className="govbr" onClick={govAuth}>GOV.BR</span>
+          </div>
         </div>
       }
-      <footer className="footer_login">
+      {/* <footer className="footer_login">
         © Libraskê | Ministério da Economia - LAVID
-      </footer>
+      </footer> */}
     </div>
   )
 };

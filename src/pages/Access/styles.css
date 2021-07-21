@@ -61,8 +61,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* justify-content: center; */
-    padding: 0.75rem 1.5rem 0.75rem 0;
+    justify-content: flex-start;
+    padding: 0.75rem 1.5rem 0.75rem 1rem;
 
     width: 18rem;
     height: 3rem;
@@ -118,6 +118,8 @@
     font-size: 1rem;
     line-height: 160%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
 
     color: #FBFBFB;
 }
@@ -213,13 +215,12 @@
         font-size: 1rem;
     }
     .main_login{
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.05rem;
     }
 
     .guest_mode{
         margin: 0 0.75rem;
-        margin-bottom: 1rem;
-
+        margin-bottom: 0.2rem;
         font-size: 0.8rem;
     }
     .govbr{
