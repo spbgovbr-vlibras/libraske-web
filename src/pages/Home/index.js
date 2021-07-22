@@ -123,7 +123,7 @@ const Home = () => {
 				<footer>
 					<div className="direitos">
 						<img src={Icon} alt="Logo" />
-						2020 Vlibras
+						2021 Vlibras
 					</div>
 					<div className="social">
 						<a href="https://www.instagram.com/vlibrasoficial/" target="_blank" rel="noreferrer"><img src={Insta} alt="Logo Instagram" /></a>
