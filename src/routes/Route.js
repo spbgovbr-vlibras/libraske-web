@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 const RouteWrapper = ({ component: Component, isPrivate = false, ...rest }) => {
   //check if store contains logged user data
-  const logged = useSelector((state) => state.auth.id_token);
+  const logged = useSelector((state) => state.auth.access_token);
 
   if (!logged && isPrivate) return <Redirect to="/" />;
 

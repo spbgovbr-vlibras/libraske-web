@@ -1,7 +1,5 @@
 import "./styles.css";
 import axios from "axios";
-import jwt from "jsonwebtoken";
-import jwtToPem from "jwk-to-pem";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
@@ -13,62 +11,75 @@ const Authorize = () => {
   const dispatch = useDispatch();
   let history = useHistory();
 
-  //obtains authorization code from URL
+  //authorization code from URL
   const code = window.location.search.replace("?code=", "");
 
-  //obtains gov.br jwk keys
-  let keys;
-  axios.get(`${process.env.REACT_APP_LOGIN_UNICO}/jwk`).then((response) => {
-    keys = response.data.keys[0];
-    console.log(keys);
-  });
-
-  //creates encoded data for authorization request header
-  const encodedAuth = Buffer.from(
-    `${process.env.REACT_APP_CLIENT_ID}:${process.env.REACT_APP_CLIENT_SECRET}`
-  ).toString("base64");
-
-  //creates authorization request header
-  const acessHeader = {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: ` Basic ${encodedAuth}`,
-    },
+  //authentication request body
+  const authData = {
+    code: code,
+    redirectUri: process.env.REACT_APP_API_REDIRECT_URI,
   };
 
-  //gov.br authorization request
+  //libraske API authentication request
   axios
-    .post(
-      `${process.env.REACT_APP_LOGIN_UNICO}/token`,
-      `grant_type=authorization_code&code=${code}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`,
-      acessHeader
-    )
+    .post(`${process.env.REACT_APP_API_URL}/libraske/auth`, authData)
     .then((response) => {
-      var decoded = jwt.verify(response.data.id_token, jwtToPem(keys));
-      let cpf = decoded.sub;
+      console.log(response.data);
 
       let data = {
-        name: decoded.name,
-        email: decoded.email,
-        cpf: cpf,
-        access_token: jwt.sign(cpf, process.env.REACT_APP_ACCESS_SECRET),
-        refresh_token: jwt.sign(cpf, process.env.REACT_APP_REFRESH_SECRET),
-        id_token: response.data.id_token,
+        name: response.data.name,
+        email: response.data.email,
+        cpf: response.data.cpf,
+        access_token: response.data.accessToken,
+        refresh_token: response.data.refreshToken,
       };
 
       dispatch(storeAuth(data));
       history.push("/play");
     })
     .catch((err) => {
-      toast.error(<div>Algo deu errado na autenticação. <br/><br/> Por favor, realize o login novamente.</div>, {
-        onClose: () => history.push("/"),
-      });
+      try {
+        toast.error(
+          <div>
+            {err.response.data}
+            <br />
+            <br /> Por favor, realize o login novamente.
+          </div>,
+          {
+            //onClose: () => history.push("/"),
+          }
+        );
+      } catch (error) {
+        toast.error(
+          <div>
+            Algo deu errado na autenticação. <br />
+            <br /> Por favor, realize o login novamente.
+          </div>,
+          {
+            //onClose: () => history.push("/"),
+          }
+        );
+      }
     });
+
+  const fakeAuth = () => {
+    let data = {
+      name: "test name",
+      email: "test@mail.com",
+      cpf: "00000000000",
+      access_token: "bypass",
+      refresh_token: "bypass",
+    };
+
+    dispatch(storeAuth(data));
+    history.push("/play");
+  };
 
   return (
     <div id="page-authorize">
       <img className="loading" src={Loading} alt="Carregando" />
       <p className="text">Autenticando...</p>
+      <button onClick={fakeAuth}>bypass auth</button>
     </div>
   );
 };

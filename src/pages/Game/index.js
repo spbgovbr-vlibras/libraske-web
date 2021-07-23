@@ -12,10 +12,10 @@ const Game = () => {
   const [logoutModal, setlogoutModal] = useState(false);
 
   const unityContext = new UnityContext({
-    loaderUrl: "unity/react.loader.js",
-    dataUrl: "unity/react.data",
-    frameworkUrl: "unity/react.framework.js",
-    codeUrl: "unity/react.wasm",
+    loaderUrl: "unity/react-build.loader.js",
+    dataUrl: "unity/react-build.data",
+    frameworkUrl: "unity/react-build.framework.js",
+    codeUrl: "unity/react-build.wasm",
   });
 
   const logout = () => {
