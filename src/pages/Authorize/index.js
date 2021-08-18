@@ -63,7 +63,7 @@ const Authorize = () => {
           );
         }
       });
-  });
+  }, []);
 
   const fakeAuth = () => {
     let data = {
