@@ -9,7 +9,7 @@ import Routes from "./routes";
 import { store, persistor } from "./store";
 
 toast.configure({
-  autoClose: 4000,
+  autoClose: 3000,
 });
 
 const App = () => {

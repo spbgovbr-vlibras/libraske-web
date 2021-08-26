@@ -48,7 +48,7 @@ const Authorize = () => {
               <br /> Por favor, realize o login novamente.
             </div>,
             {
-              //onClose: () => history.push("/"),
+              onClose: () => history.push("/"),
             }
           );
         } catch (error) {
@@ -58,31 +58,17 @@ const Authorize = () => {
               <br /> Por favor, realize o login novamente.
             </div>,
             {
-              //onClose: () => history.push("/"),
+              onClose: () => history.push("/"),
             }
           );
         }
       });
   }, []);
 
-  const fakeAuth = () => {
-    let data = {
-      name: "test name",
-      email: "test@mail.com",
-      cpf: "00000000000",
-      access_token: "bypass",
-      refresh_token: "bypass",
-    };
-
-    dispatch(storeAuth(data));
-    history.push("/play");
-  };
-
   return (
     <div id="page-authorize">
       <img className="loading" src={Loading} alt="Carregando" />
       <p className="text">Autenticando...</p>
-      <button onClick={fakeAuth}>bypass auth</button>
     </div>
   );
 };
