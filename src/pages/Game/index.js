@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Unity, { UnityContext } from "react-unity-webgl";
+import { isBrowser, isMobile } from "react-device-detect";
+
+import Icaro from "../../assets/Icaro.svg";
 
 const Game = () => {
   const auth = useSelector((state) => state.auth);
@@ -30,7 +33,7 @@ const Game = () => {
   };
 
   //Send information to Unity on load
-  useEffect(function () {
+  useEffect(() => {
     unityContext.on("loaded", function () {
       setTimeout(() => {
         unityContext.send("AccessSetup", "SetRefreshToken", auth.refresh_token);
@@ -43,31 +46,63 @@ const Game = () => {
 
   return (
     <div id="page-game">
-      <Unity
-        unityContext={unityContext}
-        style={{ width: "100vw", height: "100vh" }}
-      />
-      <div id="corner-items">
-        {logoutHover && <span className="logout-text">Sair</span>}
-        <button
-          id="corner-button"
-          onClick={() => setlogoutModal(true)}
-          onMouseEnter={() => setlogoutHover(true)}
-          onMouseLeave={() => setlogoutHover(false)}
-        >
-          <i className="logout-icon" />
-        </button>
-      </div>
-      {logoutModal && (
-        <div className="modal-wrapper">
-          <div id="logout-modal">
-            <span id="logout-title">DESEJA MESMO SAIR?</span>
-            <div className="button-row">
-              <button className="fill-button" onClick={logout}>Sim</button>
-              <button className="fill-button" onClick={() => setlogoutModal(false)}>Não</button>
+      {isBrowser && (
+        <>
+          <Unity
+            unityContext={unityContext}
+            style={{ width: "100vw", height: "100vh" }}
+          />
+          <div id="corner-items">
+            {logoutHover && <span className="logout-text">Sair</span>}
+            <button
+              id="corner-button"
+              onClick={() => setlogoutModal(true)}
+              onMouseEnter={() => setlogoutHover(true)}
+              onMouseLeave={() => setlogoutHover(false)}
+            >
+              <i className="logout-icon" />
+            </button>
+          </div>
+          {logoutModal && (
+            <div className="modal-wrapper">
+              <div id="logout-modal">
+                <span id="logout-title">DESEJA MESMO SAIR?</span>
+                <div className="button-row">
+                  <button className="fill-button" onClick={logout}>
+                    Sim
+                  </button>
+                  <button
+                    className="fill-button"
+                    onClick={() => setlogoutModal(false)}
+                  >
+                    Não
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      )}
+      {isMobile && (
+        <>
+          <div className="modal-wrapper">
+            <div id="warning-modal">
+              <img id="Icaro" src={Icaro} alt="Icaro" />
+              <span id="warning-title">ATENÇÃO</span>
+              <span id="info-primary">
+                Olá, jogador. Este jogo ainda não é compatível com o seu
+                dispotivo.
+              </span>
+              <span id="info-secondary">
+                O Libraskê foi otimizado para computadores. Por isso,{" "}
+                <u>não é possível jogá-lo em um celular ou tablet.</u>
+              </span>
+              <button className="fill-button" onClick={logout}>
+                Entendi
+              </button>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
