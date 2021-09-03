@@ -24,10 +24,12 @@ const Game = () => {
   const logout = () => {
     sessionStorage.clear();
 
-    window.open(
-      `${process.env.REACT_APP_LOGIN_UNICO}/logout?post_logout_redirect_uri=${process.env.REACT_APP_LOGOUT_URI}`,
-      "_blank"
-    );
+    if (!auth.is_guest) {
+      window.open(
+        `${process.env.REACT_APP_LOGIN_UNICO}/logout?post_logout_redirect_uri=${process.env.REACT_APP_LOGOUT_URI}`,
+        "_blank"
+      );
+    }
 
     history.push("/");
   };

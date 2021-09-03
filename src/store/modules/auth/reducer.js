@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   cpf: null,
   access_token: null,
   refresh_token: null,
-  id_token: null,
+  is_guest: null,
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -19,7 +19,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
         cpf: action.payload.cpf,
         access_token: action.payload.access_token,
         refresh_token: action.payload.refresh_token,
-        id_token: action.payload.id_token,
+        is_guest: action.payload.is_guest,
       };
 
     default:

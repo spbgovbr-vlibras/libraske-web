@@ -26,42 +26,28 @@ const Authorize = () => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/libraske/auth`, authData)
       .then((response) => {
-        console.log(response.data);
-
         let data = {
           name: response.data.name,
           email: response.data.email,
           cpf: response.data.cpf,
           access_token: response.data.accessToken,
           refresh_token: response.data.refreshToken,
+          is_guest: response.data.isGuest,
         };
 
         dispatch(storeAuth(data));
         history.push("/play");
       })
-      .catch((err) => {
-        try {
-          toast.error(
-            <div>
-              {err.response.data}
-              <br />
-              <br /> Por favor, realize o login novamente.
-            </div>,
-            {
-              onClose: () => history.push("/"),
-            }
-          );
-        } catch (error) {
-          toast.error(
-            <div>
-              Algo deu errado na autenticação. <br />
-              <br /> Por favor, realize o login novamente.
-            </div>,
-            {
-              onClose: () => history.push("/"),
-            }
-          );
-        }
+      .catch(() => {
+        toast.error(
+          <div>
+            Algo deu errado na autenticação. <br />
+            <br /> Por favor, realize o login novamente.
+          </div>,
+          {
+            onClose: () => history.push("/"),
+          }
+        );
       });
   }, []);
 
