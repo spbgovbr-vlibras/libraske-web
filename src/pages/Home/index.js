@@ -26,8 +26,8 @@ const Home = () => {
 				<header>
 					<div className="libraske-header">LIBRASKÊ</div>
 					<div className="options">
-						<a href="http://www.google.com">O PROJETO</a>
-						<a href="https://www.gov.br/governodigital/pt-br/vlibras">VLIBRAS</a>
+						<a href="#o-projeto">O PROJETO</a>
+						<a href="#sobre-vlibras">VLIBRAS</a>
 					</div>
 				</header>
 				<div className="main-content">
@@ -54,7 +54,7 @@ const Home = () => {
 								<img src={CamaraLogo} alt="Logo Câmara dos Deputados" />
 								<img src={LavidLogo} alt="Logo Lavid" />
 							</div>
-							<div>
+							<div id="o-projeto">
 								<img src={UfpbLogo} alt="Logo Ufpb" />
 								<img src={RnpLogo} alt="Logo RNP" />
 							</div>
@@ -83,7 +83,7 @@ const Home = () => {
 								<img src={IcaroCirculo} alt="Icone Ícaro" />
 								O avatar vai apresentar os sinais da música.
 							</div>
-							<div>
+							<div id="sobre-vlibras">
 								<img src={IconBody} alt="Avatar Vlibras" />
 								Você deve observar e repetir as expressões faciais
 								e os movimentos corporais de cada sinal.
