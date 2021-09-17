@@ -42,7 +42,14 @@ const Game = () => {
         unityContext.send("AccessSetup", "SetAccessToken", auth.access_token);
         unityContext.send("AccessSetup", "SetName", auth.name);
         unityContext.send("AccessSetup", "SetEmail", auth.email);
+        unityContext.send("AccessSetup", "SetIsGuest", auth.is_guest ? "true" : "false");
       }, 100);
+    });
+  }, []);
+
+  useEffect(() => {
+    unityContext.on("Logout", () => {
+      logout();
     });
   }, []);
 
