@@ -16,9 +16,9 @@ const Game = () => {
 
   const unityContext = new UnityContext({
     loaderUrl: "unity/react-build.loader.js",
-    dataUrl: "unity/react-build.data",
-    frameworkUrl: "unity/react-build.framework.js",
-    codeUrl: "unity/react-build.wasm",
+    dataUrl: "unity/react-build.data.unityweb",
+    frameworkUrl: "unity/react-build.framework.js.unityweb",
+    codeUrl: "unity/react-build.wasm.unityweb",
   });
 
   const logout = () => {
