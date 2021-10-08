@@ -11,14 +11,36 @@ import Icaro from "../../assets/Icaro.svg";
 import GuestIcon from "../../assets/guest_icon.svg";
 import Loading from "../../assets/guest_loading.svg";
 
+/**
+ * Página de login. Apresenta ao usuário as opção de login
+ * com conta GOV ou login como convidado.
+ */
 const Access = () => {
   const dispatch = useDispatch();
   let history = useHistory();
 
-  const govAuth = () => {
+  /**
+   * Redireciona usuário para a página de login do serviço GOV.BR.
+   * Caso a operação seja bem sucedida, serviço retorna ao REDIRECT_URI com o código de acesso.
+   *
+   * @param  {string}  APP_LOGIN_UNICO Endpoit do serviço login único.
+   * @param  {string}  REACT_APP_CLIENT_ID ID do client Libraskê; É necessário para redirecionamento pós autenticação.
+   * @param  {string}  REDIRECT_URI URL de redirecionamento após sucesso no login.
+   * @function Access/govAuth
+   */
+  function govAuth() {
     window.location.href = `${process.env.REACT_APP_LOGIN_UNICO}/authorize?response_type=code&client_id=${process.env.REACT_APP_CLIENT_ID}&scope=openid+email+phone+profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
-  };
+  }
 
+  /**
+   * Autentica usuário convidado na API Libraskê, realizando requisição post na API. Caso seja realizada com
+   * sucesso, as credenciais de usuário obtidas são armazenadas e o usuário é direcionado para o jogo. Caso a
+   * requisição falhe, é exibida uma mensagem de erro ao usuário.
+   * 
+   * @param  {string}  APP_API_URL - Endpoit da API Libraskê.
+   * @param  {string}  guestName - Nome do usuário que deseja se autenticar como convidado.
+   * @function Access/guestAuth
+   */
   const guestAuth = () => {
     if (guestName) {
       setLoading(true);

@@ -19,6 +19,10 @@ import IconGreen from '../../assets/icon_green.svg'
 import NotebookImg from '../../assets/notebook.svg'
 import Button from '../../components/Button'
 
+/**
+ * Homepage da aplicação libraskê. Apresenta informações gerais 
+ * sobre o projeto e fornece acesso à página de login. 
+ */
 const Home = () => {
 	return (
 		<div id="background">

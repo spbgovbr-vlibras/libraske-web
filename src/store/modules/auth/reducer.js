@@ -9,6 +9,13 @@ const INITIAL_STATE = {
   is_guest: null,
 };
 
+
+/**
+ * Redutor que armazena as credenciais do usuário.
+ * @param {object} state recebe o estado atual dos dados armazenados.
+ * @param {object} action recebe informações da ação disparada pelo sistema.
+ * @function store/authReducer
+ */
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case STORE_AUTH:
