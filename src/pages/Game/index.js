@@ -26,10 +26,10 @@ const Game = () => {
    * @constant Game/UnityContext
    */
   const unityContext = new UnityContext({
-    loaderUrl: "unity/react-build.loader.js",
-    dataUrl: "unity/react-build.data.unityweb",
-    frameworkUrl: "unity/react-build.framework.js.unityweb",
-    codeUrl: "unity/react-build.wasm.unityweb",
+    loaderUrl: "unity/libraske.loader.js",
+    dataUrl: "unity/libraske.data.unityweb",
+    frameworkUrl: "unity/libraske.framework.js.unityweb",
+    codeUrl: "unity/libraske.wasm.unityweb",
   });
 
   /**
