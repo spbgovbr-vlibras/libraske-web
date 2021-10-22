@@ -5,6 +5,7 @@
     font-weight: 800;
     font-size: 1.5rem;
     line-height: 100%;
+    cursor: pointer;
 
     border: 0.1875rem solid var(--green_);
     border-radius: 3rem;

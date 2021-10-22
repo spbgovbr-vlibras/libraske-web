@@ -16,7 +16,7 @@
     letter-spacing: -0.01em;
     line-height: 100%;
 
-    margin-top: 9rem;
+    margin-top: 7rem;
 }
 
 #login_background .subtitle{
@@ -34,7 +34,7 @@
     flex-direction: row;
 
     gap: 1rem;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
 }
 
 .main_login span{
@@ -80,6 +80,10 @@
     border-radius: 0.25rem;
 }
 
+.guest_container .guest_input:hover{
+    border: 1px solid #46E662;
+}
+
 .guest_container .guest_input input{
     width: 10.625rem;
     height: 1.5rem;
@@ -93,6 +97,11 @@
     background-color: transparent;
     outline: none;
     color: white;
+}
+
+.guest_container .guest_input input::placeholder{
+    font-size: 1.4rem;
+    color: #BBBBC4;
 }
 
 .guest_container img{
@@ -119,6 +128,25 @@
     color: transparent;
 }
 
+.guest_row {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 14px;
+    border-radius: 16px;
+    margin-top: 1px;
+}
+
+.guest_row img {
+    height: 3rem;
+    margin-right: 14px;
+}
+
+.guest_row:hover{
+    border: solid 1px #46E662;
+    margin-top: 0;
+}
+
 .guest_mode {
     font-family: 'Roboto', sans-serif;
     font-style: normal;
@@ -128,6 +156,7 @@
     text-align: center;
     display: flex;
     flex-direction: column;
+    cursor: default;
 
     color: #FBFBFB;
 }
@@ -175,6 +204,21 @@
     width: auto;
 }
 
+#login_background .player-wrapper{
+    height: 15rem;
+    width: 15rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 10px solid rgba(255, 255, 255, 0.2);
+    margin-right: 26px;
+}
+
+#login_background .react-player{
+    position: relative;
+    align-self: center;
+    background-color: #FFFFFF;
+}
+
 @media (max-width: 35rem) {
     #login_background{
         min-height: 100vh;
@@ -203,7 +247,15 @@
         margin: 0 0.75rem;
         margin-bottom: 0.5rem;
 
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+    }
+    .guest_row{
+        width: 86%;
+        margin-bottom: 1rem;
+    }
+    .guest_row img{
+        height: 3rem;
+        margin-right: 6px;
     }
     .guest_container{
         align-items: center;
@@ -218,6 +270,9 @@
     .footer_login{
         font-size: 0.8rem;
         margin-bottom: 1rem;
+    }
+    #login_background .player-wrapper{
+        margin: 18px 0;
     }
 }
 

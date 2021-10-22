@@ -1,11 +1,12 @@
 import "./styles.css";
+import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Unity, { UnityContext } from "react-unity-webgl";
 import { isBrowser, isMobile } from "react-device-detect";
 
-import Icaro from "../../assets/Icaro.svg";
+import IncompatibilidadeAlerta from "../../assets/videos/game/alerta_incompatibilidade.mp4";
 
 /**
  * Página que executa o jogo. Só é acessível quando existem credenciais de
@@ -129,7 +130,9 @@ const Game = () => {
         <>
           <div className="modal-wrapper">
             <div id="warning-modal">
-              <img id="Icaro" src={Icaro} alt="Icaro" />
+              <div className="player-wrapper">
+								<ReactPlayer className='react-player' height="100%" url={IncompatibilidadeAlerta} playing muted loop/>
+							</div>
               <span id="warning-title">ATENÇÃO</span>
               <span id="info-primary">
                 Olá, jogador. Este jogo ainda não é compatível com o seu

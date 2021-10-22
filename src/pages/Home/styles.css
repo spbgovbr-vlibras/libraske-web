@@ -208,8 +208,8 @@ header .options a:first-child{
 }
 
 #page-home .main-content .projeto div:last-child img:last-child{
-    height: 15rem;
-    width: 15rem;
+    height: 16rem;
+    width: 16rem;
 }
 
 #page-home .main-content .funciona{
@@ -314,6 +314,13 @@ header .options a:first-child{
     height: 12.5rem;
 }
 
+#page-home .main-content .vlibras .sobre .sobre_container .player-box {
+    display: flex;
+    width: 24rem;
+    height: 12.5rem;
+    justify-content: center;
+}
+
 #page-home footer{
     width: 100%;
     height: 6.5rem;
@@ -342,6 +349,31 @@ header .options a:first-child{
     display: flex;
     right: 0;
     gap: 1rem;
+}
+
+#page-home .player-wrapper{
+    height: 18rem;
+    width: 18rem;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 10px solid rgba(255, 255, 255, 0.2);
+}
+
+#page-home .player-wrapper-small{
+    position: absolute;
+    height: 12rem;
+    width: 12rem;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 10px solid rgba(255, 255, 255, 0.2);
+}
+
+#page-home .react-player{
+    position: relative;
+    align-self: center;
 }
 
 
@@ -427,9 +459,6 @@ header .options a:first-child{
         align-items: center;
         width: 90vw;
         max-width: 26rem;
-    }
-    #page-home .main-content .projeto div:last-child {
-        margin-right: 2.5rem;
     }
     #page-home .main-content .funciona{
         height: 19rem;

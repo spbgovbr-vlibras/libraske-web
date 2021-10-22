@@ -1,7 +1,11 @@
 import React from 'react'
+import ReactPlayer from 'react-player'
+import MainLibraske from '../../assets/videos/home/main_libraske.mp4'
+import AboutLibraske from '../../assets/videos/home/about_libraske.mp4'
+import AboutVlibras from '../../assets/videos/home/about_vlibras.mp4'
+
 import './styles.css'
 import { Link } from 'react-router-dom'
-import Icaro from '../../assets/Icaro.svg'
 import CamaraLogo from '../../assets/camara_logo.svg'
 import UfpbLogo from '../../assets/ufpb_logo.svg'
 import LavidLogo from '../../assets/lavid_logo.svg'
@@ -40,7 +44,9 @@ const Home = () => {
 							<b> Suíte Vlibras</b>
 						</span>
 						<div className="init-container">
-							<img className="icaro" src={Icaro} alt="Icaro" />
+							<div className="player-wrapper">
+								<ReactPlayer className='react-player' height="100%" url={MainLibraske} playing muted loop/>
+							</div>						
 							<div>
 								<span className="title">LIBRASKÊ</span>
 								<span className="subtitle">Karaokê em Libras</span>
@@ -75,7 +81,9 @@ const Home = () => {
 							</p>
 						</div>
 						<div>
-							<img src={Icaro} alt="Icaro" />
+							<div className="player-wrapper-small" style={{marginRight: "12px"}}>
+								<ReactPlayer className='react-player' height="100%" url={AboutLibraske} playing muted loop/>
+							</div>
 							<img src={Music_Icons} alt="Ícones de música" />
 						</div>
 					</div>
@@ -87,14 +95,14 @@ const Home = () => {
 								<img src={IcaroCirculo} alt="Icone Ícaro" />
 								O avatar vai apresentar os sinais da música.
 							</div>
-							<div id="sobre-vlibras">
+							<div>
 								<img src={IconBody} alt="Avatar Vlibras" />
 								Você deve observar e repetir as expressões faciais
 								e os movimentos corporais de cada sinal.
 							</div>
 						</div>
 					</div>
-					<div className="vlibras">
+					<div className="vlibras" id="sobre-vlibras">
 						<div className="sobre">
 							<div>
 								<img src={IconGreen} alt="Icone Vlibras" />
@@ -111,7 +119,11 @@ const Home = () => {
 								<img src={NotebookImg} alt="Imagem Dispositivos com Vlibras" />
 							</div>
 							<div className="sobre_container">
-								<img src={Icaro} alt="Icaro" />
+								<div className="player-box">
+								<div className="player-wrapper-small">
+									<ReactPlayer className='react-player' height="100%" url={AboutVlibras} playing muted loop/>
+								</div>
+								</div>
 								<p>
 									O Vlibras é o resultado de uma parceria entre
 									o Ministério da Economia (ME), por meio da

@@ -156,7 +156,18 @@
   color: #ffffff;
 }
 
-#Icaro {
-  height: 240px;
-  margin-bottom: 40px;
+#page-game .player-wrapper{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+  height: 15rem;
+  width: 15rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 10px solid rgba(255, 255, 255, 0.2);
+}
+
+#page-game .react-player{
+  align-self: center;
+  background-color: #FFFFFF;
 }
