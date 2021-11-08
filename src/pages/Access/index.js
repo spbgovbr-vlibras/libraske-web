@@ -150,13 +150,13 @@ const Access = () => {
                   <input
                     required
                     placeholder="Digite seu nome"
-                    maxLength={15}
+                    maxLength={16}
                     value={guestName}
                     onInput={(e) => setGuestName(e.target.value)}
                     disabled={loading}
                   />
                 </div>
-                <span>*Máximo de 15 caracteres</span>
+                <span>*Máximo de 16 caracteres</span>
                 {loading ? (
                   <img id="loading" src={Loading} alt="carregando" />
                 ) : (
