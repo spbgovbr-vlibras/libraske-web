@@ -31,7 +31,13 @@ const Game = () => {
     dataUrl: "unity/libraske.data.unityweb",
     frameworkUrl: "unity/libraske.framework.js.unityweb",
     codeUrl: "unity/libraske.wasm.unityweb",
+    streamingAssetsUrl: "unity/streamingAssets",
   });
+
+  const govAuthRedirect = () => {
+    sessionStorage.clear();
+    window.location.href = `${process.env.REACT_APP_LOGIN_UNICO}/authorize?response_type=code&client_id=${process.env.REACT_APP_CLIENT_ID}&scope=openid+email+phone+profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
+  }
 
   /**
    * Limpa as credencais de usuário armazenadas e o direciona para a página inicial da aplicação.
@@ -84,6 +90,17 @@ const Game = () => {
   useEffect(() => {
     unityContext.on("Logout", () => {
       logout();
+    });
+  }, []);
+
+  /**
+   * Listener para a chamada da função GovAuthRedirect() na Unity, que deve
+   * executar a função no React ao identificar chamada na Unity.
+   * @function Game/useEffect=>govAuthRedirect
+   */
+  useEffect(() => {
+    unityContext.on("GovAuthRedirect", () => {
+      govAuthRedirect();
     });
   }, []);
 
