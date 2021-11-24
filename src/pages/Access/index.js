@@ -134,7 +134,7 @@ const Access = () => {
               <span>Acessar</span>
               <div>
                 <div onClick={govAuth} onMouseOver={() => playVideo(LoginGov)}>
-                  <Button text="Conta Gov.br" icon="GovIcon" />
+                  <Button text="Entrar com " icon="GovIcon" />
                 </div>
                 <div onClick={handleGuest} onMouseOver={() => playVideo(LoginVisita)}>
                   <Button text="Visitante" icon="GuestIcon" />

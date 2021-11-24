@@ -23,7 +23,10 @@ const Button = ({ text, icon, type }) => {
 				(
 					<button className="button_icons">
 						< img src={icon} alt="Icone" />
-						{text}
+							<div style={{display: "inline"}}>
+								{text}
+								{icon === GovIcon && (<strong className="gov_strong">gov.br</strong>)}
+							</div>
 					</button >
 				)
 			} {
