@@ -1,0 +1,21 @@
+#page-authorize {
+  width: 100vw;
+  height: 100vh;
+  background-color: #1c1e4c;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.text {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-size: 1.6rem;
+  color: var(--ice_white);
+  margin-top: 8px;
+}
+
+.loading {
+  width: 7rem;
+}

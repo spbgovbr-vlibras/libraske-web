@@ -1,0 +1,23 @@
+:root{
+  --background-color: #31398e;
+  --header-color: #1F2560;
+  --green_: #4FEC6A;
+  --ice_white : #FEFEFE;
+  --realizadores_white: #F1F9FF;
+  --dark_blue: #202A5D;
+
+  font-size: 16px;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
