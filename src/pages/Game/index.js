@@ -7,6 +7,7 @@ import Unity, { UnityContext } from "react-unity-webgl";
 import { isBrowser, isMobile } from "react-device-detect";
 
 import IncompatibilidadeAlerta from "../../assets/videos/game/alerta_incompatibilidade.mp4";
+import { toast } from "react-toastify";
 
 /**
  * Página que executa o jogo. Só é acessível quando existem credenciais de
@@ -20,6 +21,7 @@ const Game = () => {
 
   const [logoutHover, setlogoutHover] = useState(false);
   const [logoutModal, setlogoutModal] = useState(false);
+  const [isCameraError, setIsCameraError] = useState(false);
 
   /**
    * Objeto da biblioteca 'react-unity-webgl'. Recebe as referências dos arquivos necessários
@@ -80,8 +82,31 @@ const Game = () => {
         );
       }, 100);
     });
+
+
+    requestCameraAccess()
   }, []);
 
+  function getCameraError(err) {
+    switch (err.message) {
+      case 'Requested device not found':
+        return "Nenhuma câmera encontrada.";
+      default:
+        return "Acesso a câmera negado.";
+    }
+  }
+
+  function requestCameraAccess() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(() => setIsCameraError(false))
+      .catch((err) => {
+        const errorMessage = getCameraError(err);
+        setIsCameraError(errorMessage);
+        console.error(err)
+        toast.error(errorMessage);
+      }
+      );
+  }
   /**
    * Listener para a chamada da função Logout() na Unity, que deve
    * executar a função no React ao identificar chamada na Unity.
@@ -104,69 +129,87 @@ const Game = () => {
     });
   }, []);
 
+  const AccessModal = () => {
+    return <div className="modal-wrapper" style={{ zIndex: '999' }}>
+      <div id="warning-modal" className="camera-permission-modal" style={{ width: "80%", height: "80%" }}>
+        <span>Não foi possível iniciar o jogo :(</span>
+        <p>{isCameraError}</p>
+        <button onClick={requestCameraAccess} className="fill-button">
+          Tentar novamente
+        </button>
+      </div>
+    </div>
+  }
+
+
   return (
-    <div id="page-game">
-      {isBrowser && (
-        <>
-          <Unity
-            unityContext={unityContext}
-            style={{ width: "100vw", height: "100vh" }}
-          />
-          <div id="corner-items">
-            {logoutHover && <span className="logout-text">Sair</span>}
-            <button
-              id="corner-button"
-              onClick={() => setlogoutModal(true)}
-              onMouseEnter={() => setlogoutHover(true)}
-              onMouseLeave={() => setlogoutHover(false)}
-            >
-              <i className="logout-icon" />
-            </button>
-          </div>
-          {logoutModal && (
-            <div className="modal-wrapper">
-              <div id="logout-modal">
-                <span id="logout-title">DESEJA MESMO SAIR?</span>
-                <div className="button-row">
-                  <button className="fill-button" onClick={logout}>
-                    Sim
-                  </button>
-                  <button
-                    className="fill-button"
-                    onClick={() => setlogoutModal(false)}
-                  >
-                    Não
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </>
-      )}
-      {isMobile && (
-        <>
-          <div className="modal-wrapper">
-            <div id="warning-modal">
-              <div className="player-wrapper">
-								<ReactPlayer className='react-player' height="100%" url={IncompatibilidadeAlerta} playing muted loop/>
-							</div>
-              <span id="warning-title">ATENÇÃO</span>
-              <span id="info-primary">
-                Olá, jogador. Este jogo ainda não é compatível com o seu
-                dispotivo.
-              </span>
-              <span id="info-secondary">
-                O Libraskê foi otimizado para computadores. Por isso,{" "}
-                <u>não é possível jogá-lo em um celular ou tablet.</u>
-              </span>
-              <button className="fill-button" onClick={logout}>
-                Entendi
+    <>
+      {isCameraError && <AccessModal />}
+
+      <div id="page-game">
+        {isBrowser && (
+          <>
+            <Unity
+              unityContext={unityContext}
+              style={{ width: "100vw", height: "100vh", display: !isCameraError ? "block" : "none" }}
+            />
+            <div id="corner-items">
+              {logoutHover && <span className="logout-text">Sair</span>}
+              <button
+                id="corner-button"
+                onClick={() => setlogoutModal(true)}
+                onMouseEnter={() => setlogoutHover(true)}
+                onMouseLeave={() => setlogoutHover(false)}
+              >
+                <i className="logout-icon" />
               </button>
             </div>
-          </div>
-        </>
-      )}
-    </div>
+            {logoutModal && (
+              <div className="modal-wrapper">
+                <div id="logout-modal">
+                  <span id="logout-title">DESEJA MESMO SAIR?</span>
+                  <div className="button-row">
+                    <button className="fill-button" onClick={logout}>
+                      Sim
+                    </button>
+                    <button
+                      className="fill-button"
+                      onClick={() => setlogoutModal(false)}
+                    >
+                      Não
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+        {isMobile && (
+          <>
+            <div className="modal-wrapper">
+              <div id="warning-modal">
+                <div className="player-wrapper">
+                  <ReactPlayer className='react-player' height="100%" url={IncompatibilidadeAlerta} playing muted loop />
+                </div>
+                <span id="warning-title">ATENÇÃO</span>
+                <span id="info-primary">
+                  Olá, jogador. Este jogo ainda não é compatível com o seu
+                  dispotivo.
+                </span>
+                <span id="info-secondary">
+                  O Libraskê foi otimizado para computadores. Por isso,{" "}
+                  <u>não é possível jogá-lo em um celular ou tablet.</u>
+                </span>
+                <button className="fill-button" onClick={logout}>
+                  Entendi
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+    </>
   );
 };
 

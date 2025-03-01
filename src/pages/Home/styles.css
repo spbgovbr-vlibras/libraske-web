@@ -143,6 +143,20 @@ header .options a:first-child{
     margin: 1.25rem 0 0 1.5rem;
 }
 
+.camera-permission-modal {
+    & button {
+        margin-bottom: 16px;
+    }
+    
+    & p {
+        font-size: 1.125rem;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: normal;
+        color: var(--ice_white);
+        line-height: 200%;
+    }
+}
+
 #page-home .main-content .realizadores .logos_realizadores_container{
     margin: 0.5rem 1.5rem 2rem;
     display: flex;

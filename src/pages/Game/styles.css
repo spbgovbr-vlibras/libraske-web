@@ -115,6 +115,7 @@
 }
 
 #warning-modal {
+  font-family: "M PLUS Rounded 1c", sans-serif;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -123,8 +124,17 @@
   background: #1c1e4c;
   padding: 18px 22px;
   border-radius: 8px;
-
   height: 100vh;
+  
+  span {
+    color: #FFF;
+    opacity: .7;
+  }
+
+  p {
+    font-size: 32px;
+    font-weight: bold;
+  }
 }
 
 #warning-title {
