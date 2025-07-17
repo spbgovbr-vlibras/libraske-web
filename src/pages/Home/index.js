@@ -1,7 +1,11 @@
 import React from 'react'
+import ReactPlayer from 'react-player'
+import MainLibraske from '../../assets/videos/home/main_libraske.mp4'
+import AboutLibraske from '../../assets/videos/home/about_libraske.mp4'
+import AboutVlibras from '../../assets/videos/home/about_vlibras.mp4'
+
 import './styles.css'
 import { Link } from 'react-router-dom'
-import Icaro from '../../assets/Icaro.svg'
 import CamaraLogo from '../../assets/camara_logo.svg'
 import UfpbLogo from '../../assets/ufpb_logo.svg'
 import LavidLogo from '../../assets/lavid_logo.svg'
@@ -19,6 +23,10 @@ import IconGreen from '../../assets/icon_green.svg'
 import NotebookImg from '../../assets/notebook.svg'
 import Button from '../../components/Button'
 
+/**
+ * Homepage da aplicação libraskê. Apresenta informações gerais 
+ * sobre o projeto e fornece acesso à página de login. 
+ */
 const Home = () => {
 	return (
 		<div id="background">
@@ -26,8 +34,8 @@ const Home = () => {
 				<header>
 					<div className="libraske-header">LIBRASKÊ</div>
 					<div className="options">
-						<a href="http://www.google.com">O PROJETO</a>
-						<a href="https://www.gov.br/governodigital/pt-br/vlibras">VLIBRAS</a>
+						<a href="#o-projeto">O PROJETO</a>
+						<a href="#sobre-vlibras">VLIBRAS</a>
 					</div>
 				</header>
 				<div className="main-content">
@@ -36,7 +44,9 @@ const Home = () => {
 							<b> Suíte Vlibras</b>
 						</span>
 						<div className="init-container">
-							<img className="icaro" src={Icaro} alt="Icaro" />
+							<div className="player-wrapper">
+								<ReactPlayer className='react-player' height="100%" url={MainLibraske} playing muted loop/>
+							</div>						
 							<div>
 								<span className="title">LIBRASKÊ</span>
 								<span className="subtitle">Karaokê em Libras</span>
@@ -54,7 +64,7 @@ const Home = () => {
 								<img src={CamaraLogo} alt="Logo Câmara dos Deputados" />
 								<img src={LavidLogo} alt="Logo Lavid" />
 							</div>
-							<div>
+							<div id="o-projeto">
 								<img src={UfpbLogo} alt="Logo Ufpb" />
 								<img src={RnpLogo} alt="Logo RNP" />
 							</div>
@@ -71,7 +81,9 @@ const Home = () => {
 							</p>
 						</div>
 						<div>
-							<img src={Icaro} alt="Icaro" />
+							<div className="player-wrapper-small" style={{marginRight: "12px"}}>
+								<ReactPlayer className='react-player' height="100%" url={AboutLibraske} playing muted loop/>
+							</div>
 							<img src={Music_Icons} alt="Ícones de música" />
 						</div>
 					</div>
@@ -90,7 +102,7 @@ const Home = () => {
 							</div>
 						</div>
 					</div>
-					<div className="vlibras">
+					<div className="vlibras" id="sobre-vlibras">
 						<div className="sobre">
 							<div>
 								<img src={IconGreen} alt="Icone Vlibras" />
@@ -107,7 +119,11 @@ const Home = () => {
 								<img src={NotebookImg} alt="Imagem Dispositivos com Vlibras" />
 							</div>
 							<div className="sobre_container">
-								<img src={Icaro} alt="Icaro" />
+								<div className="player-box">
+								<div className="player-wrapper-small">
+									<ReactPlayer className='react-player' height="100%" url={AboutVlibras} playing muted loop/>
+								</div>
+								</div>
 								<p>
 									O Vlibras é o resultado de uma parceria entre
 									o Ministério da Economia (ME), por meio da

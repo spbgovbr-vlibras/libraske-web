@@ -5,6 +5,12 @@ import GovIcon from '../../assets/gov_icon.svg'
 import GuestIcon from '../../assets/guest_icon.svg'
 import Voltar from '../../assets/voltar.svg'
 
+/**
+ * Componente de botão genérico.
+ * @param {string} text texto que será exibido no botão.
+ * @param {img} icon ícone que será exibido no botão.
+ * @param {string} type tipo de botão que será renderizado.
+ */
 const Button = ({ text, icon, type }) => {
 
 	if (icon === "GovIcon") icon = GovIcon
@@ -17,7 +23,10 @@ const Button = ({ text, icon, type }) => {
 				(
 					<button className="button_icons">
 						< img src={icon} alt="Icone" />
-						{text}
+							<div style={{display: "inline"}}>
+								{text}
+								{icon === GovIcon && (<strong className="gov_strong">gov.br</strong>)}
+							</div>
 					</button >
 				)
 			} {

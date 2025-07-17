@@ -1,69 +1,70 @@
 import "./styles.css";
 import axios from "axios";
-import jwt from "jsonwebtoken";
-import jwtToPem from "jwk-to-pem";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import Loading from "../../assets/loading.svg";
 import { storeAuth } from "../../store/modules/auth/actions";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
+/**
+ * Página de autorização. É acessada após autenticação com sucesso no sistema do Login Único.
+ */
 const Authorize = () => {
   const dispatch = useDispatch();
   let history = useHistory();
 
-  //obtains authorization code from URL
+  /**
+   * Código de autorização extraído da URL após redirecionamento do Login Único com sucesso.
+   * @constant Authorize/authorization
+   */
   const code = window.location.search.replace("?code=", "");
 
-  //obtains gov.br jwk keys
-  let keys;
-  axios.get(`${process.env.REACT_APP_LOGIN_UNICO}/jwk`).then((response) => {
-    keys = response.data.keys[0];
-    console.log(keys);
-  });
-
-  //creates encoded data for authorization request header
-  const encodedAuth = Buffer.from(
-    `${process.env.REACT_APP_CLIENT_ID}:${process.env.REACT_APP_CLIENT_SECRET}`
-  ).toString("base64");
-
-  //creates authorization request header
-  const acessHeader = {
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: ` Basic ${encodedAuth}`,
-    },
+  /**
+   * Dados da requisição de autenticação enviados no login para a API Libraskê.
+   * @constant Authorize/authData
+   */
+  const authData = {
+    code: code,
+    redirectUri: process.env.REACT_APP_API_REDIRECT_URI,
   };
 
-  //gov.br authorization request
-  axios
-    .post(
-      `${process.env.REACT_APP_LOGIN_UNICO}/token`,
-      `grant_type=authorization_code&code=${code}&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`,
-      acessHeader
-    )
-    .then((response) => {
-      var decoded = jwt.verify(response.data.id_token, jwtToPem(keys));
-      let cpf = decoded.sub;
+  /**
+   * Realiza a chamada de autenticação do usuário usando o código de autorização fornecido pelo serviço do login único.
+   * Caso seja realizada com sucesso, o usuário é direcionado para o jogo. Caso apresente erro, é exibida uma mensagem para o usuário
+   * e após expiração da mensagem o usuário é direcionado para a página inicial do Libraskê.
+   *
+   * @function Authorize/useEffect
+   */
+  useEffect(() => {
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/libraske/auth`, authData)
+      .then((response) => {
+        let data = {
+          name: response.data.name,
+          email: response.data.email,
+          cpf: response.data.cpf,
+          access_token: response.data.accessToken,
+          refresh_token: response.data.refreshToken,
+          is_guest: response.data.isGuest,
+        };
 
-      let data = {
-        name: decoded.name,
-        email: decoded.email,
-        cpf: cpf,
-        access_token: jwt.sign(cpf, process.env.REACT_APP_ACCESS_SECRET),
-        refresh_token: jwt.sign(cpf, process.env.REACT_APP_REFRESH_SECRET),
-        id_token: response.data.id_token,
-      };
-
-      dispatch(storeAuth(data));
-      history.push("/play");
-    })
-    .catch((err) => {
-      toast.error(<div>Algo deu errado na autenticação. <br/><br/> Por favor, realize o login novamente.</div>, {
-        onClose: () => history.push("/"),
+        dispatch(storeAuth(data));
+        history.push("/play");
+      })
+      .catch(() => {
+        toast.error(
+          <div>
+            Algo deu errado na autenticação. <br />
+            <br /> Por favor, realize o login novamente.
+          </div>,
+          {
+            onClose: () => history.push("/"),
+          }
+        );
       });
-    });
+  }, []);
 
   return (
     <div id="page-authorize">
