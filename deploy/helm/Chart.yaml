@@ -1,0 +1,13 @@
+apiVersion: v2
+name: libraskefront
+description: Módulo de libraske front do Vlibras.
+maintainers:
+  - name: Ministério da Gestão e Inovação em Serviços Públicos
+    email: sgd@gestao.gov.br
+type: application
+version: 0.1.1
+appVersion: "1.16.1"
+keywords:
+  - vlibras
+  - front
+  - react

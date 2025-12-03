@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "libraskefront.fullname" . | lower }}
+  labels:
+    {{ include "libraskefront.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.libraskefront.replicaCount }}
+  selector:
+    matchLabels:
+      {{ include "libraskefront.labels" . | indent 8 }}
+  template:
+    metadata:
+      annotations:
+        date: {{ now | quote }}
+        {{- with .Values.libraskefront.annotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{ include "libraskefront.labels" . | indent 12 }}
+        {{- with .Values.libraskefront.labels }}
+        {{- toYaml . | nindent 12 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        {{- toYaml .Values.libraskefront.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "libraskefront.fullname" . | lower }}
+          securityContext:
+            {{- toYaml .Values.libraskefront.securityContext | nindent 12 }}
+          image: "{{ .Values.libraskefront.image.repository }}:{{ .Values.libraskefront.image.tag }}"
+          imagePullPolicy: {{ .Values.libraskefront.pullPolicy }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "libraskefront.fullname" . | lower }}-app-config
+            - secretRef:
+                name: {{ if .Values.libraskefront.secrets.existingSecret }}{{ .Values.libraskefront.secrets.existingSecret }}{{- else }}{{ include "libraskefront.fullname" . }}-app-secret{{- end }}
+          tty: true
+          ports:
+            - name: http
+              containerPort: {{ .Values.libraskefront.service.port }}
+              protocol: TCP
+          {{- if .Values.libraskefront.startupProbe.enabled }}
+          startupProbe: {{- omit .Values.libraskefront.startupProbe "enabled" | toYaml | nindent 12 }}
+            tcpSocket:
+              port: {{ .Values.libraskefront.service.port }}
+          {{- end }}
+          {{- if .Values.libraskefront.livenessProbe.enabled }}
+          livenessProbe: {{- omit .Values.libraskefront.livenessProbe "enabled" | toYaml | nindent 12 }}
+            tcpSocket:
+              port: {{ .Values.libraskefront.service.port }}
+          {{- end }}
+          {{- if .Values.libraskefront.readinessProbe.enabled }}
+          readinessProbe: {{- omit .Values.libraskefront.readinessProbe "enabled" | toYaml | nindent 12 }}
+            tcpSocket:
+              port: {{ .Values.libraskefront.service.port }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.libraskefront.resources | nindent 12 }}
+      {{- with .Values.libraskefront.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.libraskefront.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.libraskefront.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+      {{- end }}
+
