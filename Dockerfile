@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:18.16.0-bullseye
 
 RUN apt-get update && apt-get install -y unzip zip ssh python3 curl git-core curl build-essential openssl libssl-dev --no-install-recommends
 
