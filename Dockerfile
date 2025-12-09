@@ -1,13 +1,14 @@
-FROM node:18
+FROM node:24 AS build
+WORKDIR /app
 
-RUN apt-get update && apt-get install -y unzip zip ssh python3 curl git-core curl build-essential openssl libssl-dev
-
-copy . /libraske/
-
-WORKDIR /libraske/
-
+COPY package.json yarn.lock ./
 RUN yarn install
 
-EXPOSE 3000
-#CMD yarn typeorm migration:run && yarn run dev
-CMD yarn start
+COPY . .
+RUN yarn build
+
+FROM nginx:1.29.3-alpine-slim
+COPY --from=build /app/build /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
