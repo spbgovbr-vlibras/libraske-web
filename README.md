@@ -63,15 +63,14 @@ mantendo a documentação sincronizada com o código-fonte.
 
 As seguintes variáveis são utilizadas pela aplicação para configuração de autenticação e integração com serviços externos:
 
-| Variável                    | Descrição                                                                 |
-|-----------------------------|---------------------------------------------------------------------------|
-| `REACT_APP_LOGIN_UNICO`     | URL base do serviço de autenticação (Login Único).                       |
-| `REACT_APP_CLIENT_ID`       | Identificador da aplicação no provedor de autenticação.                  |
-| `REACT_APP_CLIENT_SECRET`  | Chave secreta da aplicação no provedor de autenticação.                  |
-| `REACT_APP_REDIRECT_URI`    | URL de retorno após o processo de autenticação.                          |
-| `REACT_APP_ACCESS_SECRET`  | Segredo usado para validação/decodificação do token de acesso.           |
-| `REACT_APP_REFRESH_SECRET` | Segredo usado para validação/decodificação do token de atualização.      |
-| `REACT_APP_LOGOUT_URI`      | URL para redirecionamento após o logout do usuário.                      |
+| Variável                     | Descrição                                                                 |
+|------------------------------|---------------------------------------------------------------------------|
+| `REACT_APP_LOGIN_UNICO`      | URL base do serviço de autenticação (Login Único / SSO).                  |
+| `REACT_APP_CLIENT_ID`        | Identificador da aplicação no provedor de autenticação.                  |
+| `REACT_APP_REDIRECT_URI`     | URL de retorno utilizada após a autenticação do usuário.                 |
+| `REACT_APP_LOGOUT_URI`       | URL para onde o usuário é redirecionado após realizar logout.            |
+| `REACT_APP_API_URL`          | URL base da API backend consumida pela aplicação.                        |
+| `REACT_APP_API_REDIRECT_URI` | URL de retorno utilizada pela API no fluxo de autenticação.              |                   |
 
 Em desenvolvimento, os valores são lidos a partir do arquivo `.env`, seguindo o
 padrão do React (`REACT_APP_*`). O repositório inclui um `.env.example` como
