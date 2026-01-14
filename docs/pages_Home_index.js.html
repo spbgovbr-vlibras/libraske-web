@@ -27,9 +27,13 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import React from 'react'
+import ReactPlayer from 'react-player'
+import MainLibraske from '../../assets/videos/home/main_libraske.mp4'
+import AboutLibraske from '../../assets/videos/home/about_libraske.mp4'
+import AboutVlibras from '../../assets/videos/home/about_vlibras.mp4'
+
 import './styles.css'
 import { Link } from 'react-router-dom'
-import Icaro from '../../assets/Icaro.svg'
 import CamaraLogo from '../../assets/camara_logo.svg'
 import UfpbLogo from '../../assets/ufpb_logo.svg'
 import LavidLogo from '../../assets/lavid_logo.svg'
@@ -68,7 +72,9 @@ const Home = () => {
 							&lt;b> Suíte Vlibras&lt;/b>
 						&lt;/span>
 						&lt;div className="init-container">
-							&lt;img className="icaro" src={Icaro} alt="Icaro" />
+							&lt;div className="player-wrapper">
+								&lt;ReactPlayer className='react-player' height="100%" url={MainLibraske} playing muted loop/>
+							&lt;/div>						
 							&lt;div>
 								&lt;span className="title">LIBRASKÊ&lt;/span>
 								&lt;span className="subtitle">Karaokê em Libras&lt;/span>
@@ -103,7 +109,9 @@ const Home = () => {
 							&lt;/p>
 						&lt;/div>
 						&lt;div>
-							&lt;img src={Icaro} alt="Icaro" />
+							&lt;div className="player-wrapper-small" style={{marginRight: "12px"}}>
+								&lt;ReactPlayer className='react-player' height="100%" url={AboutLibraske} playing muted loop/>
+							&lt;/div>
 							&lt;img src={Music_Icons} alt="Ícones de música" />
 						&lt;/div>
 					&lt;/div>
@@ -115,14 +123,14 @@ const Home = () => {
 								&lt;img src={IcaroCirculo} alt="Icone Ícaro" />
 								O avatar vai apresentar os sinais da música.
 							&lt;/div>
-							&lt;div id="sobre-vlibras">
+							&lt;div>
 								&lt;img src={IconBody} alt="Avatar Vlibras" />
 								Você deve observar e repetir as expressões faciais
 								e os movimentos corporais de cada sinal.
 							&lt;/div>
 						&lt;/div>
 					&lt;/div>
-					&lt;div className="vlibras">
+					&lt;div className="vlibras" id="sobre-vlibras">
 						&lt;div className="sobre">
 							&lt;div>
 								&lt;img src={IconGreen} alt="Icone Vlibras" />
@@ -139,7 +147,11 @@ const Home = () => {
 								&lt;img src={NotebookImg} alt="Imagem Dispositivos com Vlibras" />
 							&lt;/div>
 							&lt;div className="sobre_container">
-								&lt;img src={Icaro} alt="Icaro" />
+								&lt;div className="player-box">
+								&lt;div className="player-wrapper-small">
+									&lt;ReactPlayer className='react-player' height="100%" url={AboutVlibras} playing muted loop/>
+								&lt;/div>
+								&lt;/div>
 								&lt;p>
 									O Vlibras é o resultado de uma parceria entre
 									o Ministério da Economia (ME), por meio da
@@ -178,13 +190,13 @@ export default Home</code></pre>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Access">Access</a></li><li><a href="global.html#Access/govAuth">Access/govAuth</a></li><li><a href="global.html#Access/guestAuth">Access/guestAuth</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Authorize">Authorize</a></li><li><a href="global.html#Authorize/authData">Authorize/authData</a></li><li><a href="global.html#Authorize/authorization">Authorize/authorization</a></li><li><a href="global.html#Authorize/useEffect">Authorize/useEffect</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Game">Game</a></li><li><a href="global.html#Game/Logout">Game/Logout</a></li><li><a href="global.html#Game/UnityContext">Game/UnityContext</a></li><li><a href="global.html#Game/useEffect=%253Eloaded">Game/useEffect=>loaded</a></li><li><a href="global.html#Game/useEffect=%253Elogout">Game/useEffect=>logout</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routes">Routes</a></li><li><a href="global.html#RouteWrapper">RouteWrapper</a></li><li><a href="global.html#store/authReducer">store/authReducer</a></li><li><a href="global.html#store/storeAuth">store/storeAuth</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Access">Access</a></li><li><a href="global.html#Access/govAuth">Access/govAuth</a></li><li><a href="global.html#Access/guestAuth">Access/guestAuth</a></li><li><a href="global.html#Access/playVideo">Access/playVideo</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Authorize">Authorize</a></li><li><a href="global.html#Authorize/authData.">Authorize/authData.</a></li><li><a href="global.html#Authorize/authorization">Authorize/authorization</a></li><li><a href="global.html#Authorize/useEffect">Authorize/useEffect</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#config">config</a></li><li><a href="global.html#Game">Game</a></li><li><a href="global.html#Game/Logout">Game/Logout</a></li><li><a href="global.html#Game/UnityContext">Game/UnityContext</a></li><li><a href="global.html#Game/useEffect=%253EgovAuthRedirect">Game/useEffect=>govAuthRedirect</a></li><li><a href="global.html#Game/useEffect=%253Eloaded">Game/useEffect=>loaded</a></li><li><a href="global.html#Game/useEffect=%253Elogout">Game/useEffect=>logout</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routes">Routes</a></li><li><a href="global.html#RouteWrapper">RouteWrapper</a></li><li><a href="global.html#store/authReducer">store/authReducer</a></li><li><a href="global.html#store/storeAuth">store/storeAuth</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Wed Oct 06 2021 20:46:47 GMT-0300 (GMT-03:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Jan 14 2026 12:15:23 GMT-0300 (Brasilia Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
