@@ -7,7 +7,7 @@ import Loading from "../../assets/loading.svg";
 import { storeAuth } from "../../store/modules/auth/actions";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
-
+import { config } from "../../config";
 /**
  * Página de autorização. É acessada após autenticação com sucesso no sistema do Login Único.
  */
@@ -23,11 +23,16 @@ const Authorize = () => {
 
   /**
    * Dados da requisição de autenticação enviados no login para a API Libraskê.
-   * @constant Authorize/authData
+   * @constant Authorize/authData.
+   * 
+   * As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
+   * 
+   * @param  {string}  REACT_APP_API_REDIRECT_URI URL de redirecionamento após sucesso no login (config.apiRedirectUri).
+   * @param  {string}  code Código de autorização obtido após autenticação no serviço Login Único.
    */
   const authData = {
     code: code,
-    redirectUri: process.env.REACT_APP_API_REDIRECT_URI,
+    redirectUri: config.apiRedirectUri,
   };
 
   /**
@@ -39,7 +44,7 @@ const Authorize = () => {
    */
   useEffect(() => {
     axios
-      .post(`${process.env.REACT_APP_API_URL}/libraske/auth`, authData)
+      .post(`${config.apiUrl}/libraske/auth`, authData)
       .then((response) => {
         let data = {
           name: response.data.name,

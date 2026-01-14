@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Unity, { UnityContext } from "react-unity-webgl";
 import { isBrowser, isMobile } from "react-device-detect";
+import { config } from "../../config";
 
 import IncompatibilidadeAlerta from "../../assets/videos/game/alerta_incompatibilidade.mp4";
 import { toast } from "react-toastify";
@@ -36,17 +37,29 @@ const Game = () => {
     streamingAssetsUrl: "unity/streamingAssets",
   });
 
+   /**
+   * 
+   * As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
+   * 
+   * @param  {string}  REACT_APP_LOGIN_UNICO Endpoit do serviço login único (config.loginUnico).
+   * @param  {string}  REACT_APP_CLIENT_ID ID do client Libraskê; É necessário para redirecionamento pós autenticação (config.clientId).
+   * @param  {string}  REACT_APP_REDIRECT_URI URL de redirecionamento após sucesso no login (config.redirectUri).
+   * @function Game/Logout
+   */
   const govAuthRedirect = () => {
     sessionStorage.clear();
-    window.location.href = `${process.env.REACT_APP_LOGIN_UNICO}/authorize?response_type=code&client_id=${process.env.REACT_APP_CLIENT_ID}&scope=openid+email+phone+profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
+    window.location.href = `${config.loginUnico}/authorize?response_type=code&client_id=${config.clientId}&scope=openid+email+phone+profile&redirect_uri=${config.redirectUri}`;
   }
 
   /**
    * Limpa as credencais de usuário armazenadas e o direciona para a página inicial da aplicação.
    * Caso o usuário esteja logado com a conta GOV, também realiza o logout no sistema Login Único,
    * sendo necessário abrir a URL do serviço em uma nova guia.
-   * @param  {string}  APP_LOGIN_UNICO Endpoit do serviço login único.
-   * @param  {string}  APP_LOGOUT_URI URL de redirecionamento necessária para logout no serviço Login Único.
+   * 
+   * As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
+   * 
+   * @param  {string}  REACT_APP_LOGIN_UNICO Endpoit do serviço login único (config.loginUnico).
+   * @param  {string}  REACT_APP_LOGOUT_URI URL de redirecionamento necessária para logout no serviço Login Único(config.logoutUri).
    * @function Game/Logout
    */
   const logout = () => {
@@ -54,7 +67,7 @@ const Game = () => {
 
     if (!auth.is_guest) {
       window.open(
-        `${process.env.REACT_APP_LOGIN_UNICO}/logout?post_logout_redirect_uri=${process.env.REACT_APP_LOGOUT_URI}`,
+        `${config.loginUnico}/logout?post_logout_redirect_uri=${config.logoutUri}`,
         "_blank"
       );
     }
