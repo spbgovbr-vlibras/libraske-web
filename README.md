@@ -46,7 +46,16 @@
 
 ## Documentação
 
-A documentação está incluída no código, com anotações em formato jsdoc. Também é possível visualizar a documentação completa ao abrir o arquivo `docs/global.html` em qualquer navegador.
+A documentação está incluída no código, com anotações em formato JSDoc.
+Também é possível visualizar a documentação completa ao abrir o arquivo `docs/global.html` em qualquer navegador.
+
+Sempre que houver mudanças nos comentários ou no código, a documentação
+pode ser regenerada automaticamente com:
+
+`yarn docs`
+
+Esse comando gera novamente os arquivos HTML dentro da pasta docs/,
+mantendo a documentação sincronizada com o código-fonte.
 
 <hr>
 
