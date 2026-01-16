@@ -14,6 +14,9 @@ RUN yarn build
 # ---------- Runtime stage ----------
 FROM nginx:1.29.3-alpine-slim
 
+# Copia sua configuração
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Copia build
 COPY --from=build /app/build /usr/share/nginx/html
 
