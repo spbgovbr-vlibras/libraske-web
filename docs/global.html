@@ -98,7 +98,7 @@
 
         
             
-<h4 class="name" id="Authorize/authData"><span class="type-signature">(constant) </span>Authorize/authData<span class="type-signature"></span></h4>
+<h4 class="name" id="Authorize/authData."><span class="type-signature">(constant) </span>Authorize/authData.<span class="type-signature"></span></h4>
 
 
 
@@ -222,13 +222,285 @@
 
         
             
+<h4 class="name" id="config"><span class="type-signature">(constant) </span>config<span class="type-signature"> :Object</span></h4>
+
+
+
+
+<div class="description">
+    Objeto de configuração em tempo de execução da aplicação.
+
+Cada propriedade é resolvida em tempo de execução preferindo valores expostos
+no objeto global window.__ENV__ (se presente) e, caso contrário, usando as
+variáveis de build process.env. Qualquer propriedade pode ser undefined se não
+for fornecida pelo ambiente.
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+    <h5 class="subsection-title">Properties:</h5>
+
+    
+
+<table class="props">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>apiUrl</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">URL base da API. Prefere
+  window.__ENV__.API_URL ou window.__ENV__.REACT_APP_API_URL, caso contrário
+  process.env.REACT_APP_API_URL.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>loginUnico</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Host/flag do LoginUnico. Obtido de
+  window.__ENV__.REACT_APP_LOGIN_UNICO ou process.env.REACT_APP_LOGIN_UNICO.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>clientId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Identificador do cliente OAuth/OpenID.
+  Obtido de window.__ENV__.REACT_APP_CLIENT_ID ou process.env.REACT_APP_CLIENT_ID.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>redirectUri</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">URI de redirecionamento OAuth do
+  cliente. Obtido de window.__ENV__.REACT_APP_REDIRECT_URI ou
+  process.env.REACT_APP_REDIRECT_URI.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>logoutUri</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Endpoint/URI de logout. Obtido de
+  window.__ENV__.REACT_APP_LOGOUT_URI ou process.env.REACT_APP_LOGOUT_URI.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>apiRedirectUri</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">undefined</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">URI de redirecionamento da API
+  backend (se diferente). Obtido de
+  window.__ENV__.REACT_APP_API_REDIRECT_URI ou process.env.REACT_APP_API_REDIRECT_URI.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="config.js.html">config.js</a>, <a href="config.js.html#line3">line 3</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="Game/UnityContext"><span class="type-signature">(constant) </span>Game/UnityContext<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    Objeto da biblioteca 'react-unity-webgl'. Recebe as referências dos arquivos necessáriospara executar o jogo no WebGL. Os arquivos estão localizados na pasta public/unity.
+    Objeto da biblioteca 'react-unity-webgl'. Recebe as referências dos arquivos necessários
+para executar o jogo no WebGL. Os arquivos estão localizados na pasta public/unity.
 </div>
 
 
@@ -266,7 +538,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pages_Game_index.js.html">pages/Game/index.js</a>, <a href="pages_Game_index.js.html#line23">line 23</a>
+        <a href="pages_Game_index.js.html">pages/Game/index.js</a>, <a href="pages_Game_index.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -302,7 +574,8 @@
 
 
 <div class="description">
-    Página de login. Apresenta ao usuário as opção de logincom conta GOV ou login como convidado.
+    Página de login. Apresenta ao usuário as opção de login
+com conta GOV ou login como convidado.
 </div>
 
 
@@ -346,7 +619,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pages_Access_index.js.html">pages/Access/index.js</a>, <a href="pages_Access_index.js.html#line18">line 18</a>
+        <a href="pages_Access_index.js.html">pages/Access/index.js</a>, <a href="pages_Access_index.js.html#line24">line 24</a>
     </li></ul></dd>
     
 
@@ -382,7 +655,7 @@
     
 
     
-    <h4 class="name" id="Access/govAuth"><span class="type-signature"></span>Access/govAuth<span class="signature">(APP_LOGIN_UNICO, REACT_APP_CLIENT_ID, REDIRECT_URI)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Access/govAuth"><span class="type-signature"></span>Access/govAuth<span class="signature">(REACT_APP_LOGIN_UNICO, REACT_APP_CLIENT_ID, REACT_APP_REDIRECT_URI)</span><span class="type-signature"></span></h4>
     
 
     
@@ -390,7 +663,10 @@
 
 
 <div class="description">
-    Redireciona usuário para a página de login do serviço GOV.BR.Caso a operação seja bem sucedida, serviço retorna ao REDIRECT_URI com o código de acesso.
+    Redireciona usuário para a página de login do serviço GOV.BR.
+Caso a operação seja bem sucedida, serviço retorna ao REACT_APP_REDIRECT_URI com o código de acesso.
+
+As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
 </div>
 
 
@@ -426,7 +702,7 @@
 
         <tr>
             
-                <td class="name"><code>APP_LOGIN_UNICO</code></td>
+                <td class="name"><code>REACT_APP_LOGIN_UNICO</code></td>
             
 
             <td class="type">
@@ -442,7 +718,7 @@
 
             
 
-            <td class="description last">Endpoit do serviço login único.</td>
+            <td class="description last">Endpoit do serviço login único (config.loginUnico).</td>
         </tr>
 
     
@@ -465,14 +741,14 @@
 
             
 
-            <td class="description last">ID do client Libraskê; É necessário para redirecionamento pós autenticação.</td>
+            <td class="description last">ID do client Libraskê; É necessário para redirecionamento pós autenticação (config.clientId).</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>REDIRECT_URI</code></td>
+                <td class="name"><code>REACT_APP_REDIRECT_URI</code></td>
             
 
             <td class="type">
@@ -488,7 +764,7 @@
 
             
 
-            <td class="description last">URL de redirecionamento após sucesso no login.</td>
+            <td class="description last">URL de redirecionamento após sucesso no login (config.redirectUri).</td>
         </tr>
 
     
@@ -529,7 +805,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pages_Access_index.js.html">pages/Access/index.js</a>, <a href="pages_Access_index.js.html#line22">line 22</a>
+        <a href="pages_Access_index.js.html">pages/Access/index.js</a>, <a href="pages_Access_index.js.html#line28">line 28</a>
     </li></ul></dd>
     
 
@@ -565,7 +841,7 @@
     
 
     
-    <h4 class="name" id="Access/guestAuth"><span class="type-signature"></span>Access/guestAuth<span class="signature">(APP_API_URL, guestName)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Access/guestAuth"><span class="type-signature"></span>Access/guestAuth<span class="signature">(REACT_APP_API_URL, guestName)</span><span class="type-signature"></span></h4>
     
 
     
@@ -573,7 +849,11 @@
 
 
 <div class="description">
-    Autentica usuário convidado na API Libraskê, realizando requisição post na API. Caso seja realizada comsucesso, as credenciais de usuário obtidas são armazenadas e o usuário é direcionado para o jogo. Caso arequisição falhe, é exibida uma mensagem de erro ao usuário.
+    Autentica usuário convidado na API Libraskê, realizando requisição post na API. Caso seja realizada com
+sucesso, as credenciais de usuário obtidas são armazenadas e o usuário é direcionado para o jogo. Caso a
+requisição falhe, é exibida uma mensagem de erro ao usuário.
+
+As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
 </div>
 
 
@@ -609,7 +889,7 @@
 
         <tr>
             
-                <td class="name"><code>APP_API_URL</code></td>
+                <td class="name"><code>REACT_APP_API_URL</code></td>
             
 
             <td class="type">
@@ -625,7 +905,7 @@
 
             
 
-            <td class="description last">Endpoit da API Libraskê.</td>
+            <td class="description last">Endpoit da API Libraskê (config.apiUrl).</td>
         </tr>
 
     
@@ -689,7 +969,145 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pages_Access_index.js.html">pages/Access/index.js</a>, <a href="pages_Access_index.js.html#line35">line 35</a>
+        <a href="pages_Access_index.js.html">pages/Access/index.js</a>, <a href="pages_Access_index.js.html#line43">line 43</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="Access/playVideo"><span class="type-signature"></span>Access/playVideo<span class="signature">(video)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Reproduz o vídeo enviado como parâmetro no player da página. Caso o vídeo passado seja o mesmo
+que está sendo reproduzido, a função só reinicia vídeo caso a reprodução atual tenha terminado.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>video</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Vídeo que deve ser reproduzido no player.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_Access_index.js.html">pages/Access/index.js</a>, <a href="pages_Access_index.js.html#line95">line 95</a>
     </li></ul></dd>
     
 
@@ -733,7 +1151,12 @@
 
 
 <div class="description">
-    Função geradora da aplicação.Configura os serviços de Redux, Rotas e Toast.Provider configura o armazenamento do redux, PersistGategarante o armazenamento dos dados do usuário durante a sessão eToast prepara a exibição de mensagens ao usuário.
+    Função geradora da aplicação.
+Configura os serviços de Redux, Rotas e Toast.
+
+Provider configura o armazenamento do redux, PersistGate
+garante o armazenamento dos dados do usuário durante a sessão e
+Toast prepara a exibição de mensagens ao usuário.
 </div>
 
 
@@ -981,7 +1404,9 @@
 
 
 <div class="description">
-    Realiza a chamada de autenticação do usuário usando o código de autorização fornecido pelo serviço do login único.Caso seja realizada com sucesso, o usuário é direcionado para o jogo. Caso apresente erro, é exibida uma mensagem para o usuárioe após expiração da mensagem o usuário é direcionado para a página inicial do Libraskê.
+    Realiza a chamada de autenticação do usuário usando o código de autorização fornecido pelo serviço do login único.
+Caso seja realizada com sucesso, o usuário é direcionado para o jogo. Caso apresente erro, é exibida uma mensagem para o usuário
+e após expiração da mensagem o usuário é direcionado para a página inicial do Libraskê.
 </div>
 
 
@@ -1025,7 +1450,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pages_Authorize_index.js.html">pages/Authorize/index.js</a>, <a href="pages_Authorize_index.js.html#line33">line 33</a>
+        <a href="pages_Authorize_index.js.html">pages/Authorize/index.js</a>, <a href="pages_Authorize_index.js.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -1252,7 +1677,10 @@
 
 
 <div class="description">
-    Página que executa o jogo. Só é acessível quando existem credenciais deautenticação válidas no armazenamento da sessão.Caso o usuário esteja em um desktop, executa o jogo. Caso o usuário esteja em um dispositivo móvel,(detectado usando a biblioteca 'react-device-detect') é exibida a tela de incompatibilidade e o jogo não é executado.
+    Página que executa o jogo. Só é acessível quando existem credenciais de
+autenticação válidas no armazenamento da sessão.
+Caso o usuário esteja em um desktop, executa o jogo. Caso o usuário esteja em um dispositivo móvel,
+(detectado usando a biblioteca 'react-device-detect') é exibida a tela de incompatibilidade e o jogo não é executado.
 </div>
 
 
@@ -1296,7 +1724,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pages_Game_index.js.html">pages/Game/index.js</a>, <a href="pages_Game_index.js.html#line16">line 16</a>
+        <a href="pages_Game_index.js.html">pages/Game/index.js</a>, <a href="pages_Game_index.js.html#line19">line 19</a>
     </li></ul></dd>
     
 
@@ -1332,7 +1760,7 @@
     
 
     
-    <h4 class="name" id="Game/Logout"><span class="type-signature"></span>Game/Logout<span class="signature">(APP_LOGIN_UNICO, APP_LOGOUT_URI)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Game/Logout"><span class="type-signature"></span>Game/Logout<span class="signature">(REACT_APP_LOGIN_UNICO, REACT_APP_CLIENT_ID, REACT_APP_REDIRECT_URI)</span><span class="type-signature"></span></h4>
     
 
     
@@ -1340,7 +1768,7 @@
 
 
 <div class="description">
-    Limpa as credencais de usuário armazenadas e o direciona para a página inicial da aplicação.Caso o usuário esteja logado com a conta GOV, também realiza o logout no sistema Login Único,sendo necessário abrir a URL do serviço em uma nova guia.
+    As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
 </div>
 
 
@@ -1376,7 +1804,7 @@
 
         <tr>
             
-                <td class="name"><code>APP_LOGIN_UNICO</code></td>
+                <td class="name"><code>REACT_APP_LOGIN_UNICO</code></td>
             
 
             <td class="type">
@@ -1392,14 +1820,14 @@
 
             
 
-            <td class="description last">Endpoit do serviço login único.</td>
+            <td class="description last">Endpoit do serviço login único (config.loginUnico).</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>APP_LOGOUT_URI</code></td>
+                <td class="name"><code>REACT_APP_CLIENT_ID</code></td>
             
 
             <td class="type">
@@ -1415,7 +1843,30 @@
 
             
 
-            <td class="description last">URL de redirecionamento necessária para logout no serviço Login Único.</td>
+            <td class="description last">ID do client Libraskê; É necessário para redirecionamento pós autenticação (config.clientId).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>REACT_APP_REDIRECT_URI</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">URL de redirecionamento após sucesso no login (config.redirectUri).</td>
         </tr>
 
     
@@ -1456,7 +1907,260 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pages_Game_index.js.html">pages/Game/index.js</a>, <a href="pages_Game_index.js.html#line35">line 35</a>
+        <a href="pages_Game_index.js.html">pages/Game/index.js</a>, <a href="pages_Game_index.js.html#line40">line 40</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="Game/Logout"><span class="type-signature"></span>Game/Logout<span class="signature">(REACT_APP_LOGIN_UNICO, REACT_APP_LOGOUT_URI)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Limpa as credencais de usuário armazenadas e o direciona para a página inicial da aplicação.
+Caso o usuário esteja logado com a conta GOV, também realiza o logout no sistema Login Único,
+sendo necessário abrir a URL do serviço em uma nova guia.
+
+As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>REACT_APP_LOGIN_UNICO</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Endpoit do serviço login único (config.loginUnico).</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>REACT_APP_LOGOUT_URI</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">URL de redirecionamento necessária para logout no serviço Login Único(config.logoutUri).</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_Game_index.js.html">pages/Game/index.js</a>, <a href="pages_Game_index.js.html#line54">line 54</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="Game/useEffect=%3EgovAuthRedirect"><span class="type-signature"></span>Game/useEffect=>govAuthRedirect<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Listener para a chamada da função GovAuthRedirect() na Unity, que deve
+executar a função no React ao identificar chamada na Unity.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_Game_index.js.html">pages/Game/index.js</a>, <a href="pages_Game_index.js.html#line134">line 134</a>
     </li></ul></dd>
     
 
@@ -1500,95 +2204,9 @@
 
 
 <div class="description">
-    Envia as credenciais do usuário logado para a Unity após carregamento do jogo.Usa timeout para evitar problemas de sincronia e unityContext.send() para enviar os dadospara o jogo.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pages_Game_index.js.html">pages/Game/index.js</a>, <a href="pages_Game_index.js.html#line56">line 56</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="Game/useEffect=%3Elogout"><span class="type-signature"></span>Game/useEffect=>logout<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    Listener para a chamada da função Logout() na Unity, que deveexecutar a função no React ao identificar chamada na Unity.
+    Envia as credenciais do usuário logado para a Unity após carregamento do jogo.
+Usa timeout para evitar problemas de sincronia e unityContext.send() para enviar os dados
+para o jogo.
 </div>
 
 
@@ -1633,6 +2251,95 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="pages_Game_index.js.html">pages/Game/index.js</a>, <a href="pages_Game_index.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="Game/useEffect=%3Elogout"><span class="type-signature"></span>Game/useEffect=>logout<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Listener para a chamada da função Logout() na Unity, que deve
+executar a função no React ao identificar chamada na Unity.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pages_Game_index.js.html">pages/Game/index.js</a>, <a href="pages_Game_index.js.html#line123">line 123</a>
     </li></ul></dd>
     
 
@@ -1720,7 +2427,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="pages_Home_index.js.html">pages/Home/index.js</a>, <a href="pages_Home_index.js.html#line26">line 26</a>
+        <a href="pages_Home_index.js.html">pages/Home/index.js</a>, <a href="pages_Home_index.js.html#line30">line 30</a>
     </li></ul></dd>
     
 
@@ -1764,7 +2471,8 @@
 
 
 <div class="description">
-    Agrega as rotas do sistema, usando a implementação customizadade rota para impedir acesso à rotas protegidas.
+    Agrega as rotas do sistema, usando a implementação customizada
+de rota para impedir acesso à rotas protegidas.
 </div>
 
 
@@ -1852,7 +2560,10 @@
 
 
 <div class="description">
-    Implementação customizada de Rota para o sistema.Somente renderiza a página solicitada caso existam credenciaisde usuário válidas armazenadas. Caso contrário, redireciona para apágina inicial da aplicação.
+    Implementação customizada de Rota para o sistema.
+Somente renderiza a página solicitada caso existam credenciais
+de usuário válidas armazenadas. Caso contrário, redireciona para a
+página inicial da aplicação.
 </div>
 
 
@@ -2288,13 +2999,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Access">Access</a></li><li><a href="global.html#Access/govAuth">Access/govAuth</a></li><li><a href="global.html#Access/guestAuth">Access/guestAuth</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Authorize">Authorize</a></li><li><a href="global.html#Authorize/authData">Authorize/authData</a></li><li><a href="global.html#Authorize/authorization">Authorize/authorization</a></li><li><a href="global.html#Authorize/useEffect">Authorize/useEffect</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Game">Game</a></li><li><a href="global.html#Game/Logout">Game/Logout</a></li><li><a href="global.html#Game/UnityContext">Game/UnityContext</a></li><li><a href="global.html#Game/useEffect=%253Eloaded">Game/useEffect=>loaded</a></li><li><a href="global.html#Game/useEffect=%253Elogout">Game/useEffect=>logout</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routes">Routes</a></li><li><a href="global.html#RouteWrapper">RouteWrapper</a></li><li><a href="global.html#store/authReducer">store/authReducer</a></li><li><a href="global.html#store/storeAuth">store/storeAuth</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Access">Access</a></li><li><a href="global.html#Access/govAuth">Access/govAuth</a></li><li><a href="global.html#Access/guestAuth">Access/guestAuth</a></li><li><a href="global.html#Access/playVideo">Access/playVideo</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Authorize">Authorize</a></li><li><a href="global.html#Authorize/authData.">Authorize/authData.</a></li><li><a href="global.html#Authorize/authorization">Authorize/authorization</a></li><li><a href="global.html#Authorize/useEffect">Authorize/useEffect</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#config">config</a></li><li><a href="global.html#Game">Game</a></li><li><a href="global.html#Game/Logout">Game/Logout</a></li><li><a href="global.html#Game/UnityContext">Game/UnityContext</a></li><li><a href="global.html#Game/useEffect=%253EgovAuthRedirect">Game/useEffect=>govAuthRedirect</a></li><li><a href="global.html#Game/useEffect=%253Eloaded">Game/useEffect=>loaded</a></li><li><a href="global.html#Game/useEffect=%253Elogout">Game/useEffect=>logout</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routes">Routes</a></li><li><a href="global.html#RouteWrapper">RouteWrapper</a></li><li><a href="global.html#store/authReducer">store/authReducer</a></li><li><a href="global.html#store/storeAuth">store/storeAuth</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Wed Oct 06 2021 20:46:47 GMT-0300 (GMT-03:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Jan 14 2026 12:15:23 GMT-0300 (Brasilia Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
