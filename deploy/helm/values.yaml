@@ -22,7 +22,7 @@ global:
 libraskefront:
   replicaCount: 1
   image:
-    repository: "registry.sisp.gov.br/vlibras/vlibras-video-service/vlibras-video-core"
+    repository: "registry.sisp.gov.br/vlibras/vlibras-libraskefront/vlibras-libraskefront"
     tag: ""
   
   pullPolicy: Always
@@ -32,8 +32,8 @@ libraskefront:
     REACT_APP_CLIENT_ID: libraske.vlibras.gov.br
     REACT_APP_REDIRECT_URI: http://libraske.vlibras.gov.br/authorize
     REACT_APP_LOGOUT_URI: https://libraske.vlibras.gov.br/
-    REACT_APP_API_URL: https://api-libraske-dth.vlibras.lavid.ufpb.br
-    REACT_APP_API_REDIRECT_URI: https://front-libraske-dth.vlibras.lavid.ufpb.br/authorize
+    REACT_APP_API_URL: https://api-libraske-dth.vlibras.gov.br
+    REACT_APP_API_REDIRECT_URI: https://front-libraske-dth.vlibras.gov.br/authorize
 
 
   secrets:
@@ -43,7 +43,7 @@ libraskefront:
     existingSecret: ""
     
     appSecret:
-      SEGREDO_X: 'seDesejarAlgumSegredo'
+      PLACEHOLDER: 'PLACEHOLDER_CASO_SEJA_NECESSARIO'
 
   service:
     type: ClusterIP
