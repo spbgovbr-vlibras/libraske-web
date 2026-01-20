@@ -30,10 +30,10 @@ libraskefront:
   appConfig:
     REACT_APP_LOGIN_UNICO: https://sso.acesso.gov.br
     REACT_APP_CLIENT_ID: libraske.vlibras.gov.br
-    REACT_APP_REDIRECT_URI: http://libraske.vlibras.gov.br/authorize
-    REACT_APP_LOGOUT_URI: https://libraske.vlibras.gov.br/
-    REACT_APP_API_URL: https://api-libraske-dth.vlibras.gov.br
-    REACT_APP_API_REDIRECT_URI: https://front-libraske-dth.vlibras.gov.br/authorize
+    REACT_APP_REDIRECT_URI: http://libraske-dth.vlibras.gov.br/authorize
+    REACT_APP_LOGOUT_URI: https://libraske-dth.vlibras.gov.br/
+    REACT_APP_API_URL: https://libraske-back-dth.vlibras.gov.br
+    REACT_APP_API_REDIRECT_URI: https://libraske-dth.vlibras.gov.br/authorize
 
 
   secrets:
