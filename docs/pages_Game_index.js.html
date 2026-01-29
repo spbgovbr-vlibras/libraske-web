@@ -27,13 +27,16 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import "./styles.css";
+import ReactPlayer from "react-player";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Unity, { UnityContext } from "react-unity-webgl";
 import { isBrowser, isMobile } from "react-device-detect";
+import { config } from "../../config";
 
-import Icaro from "../../assets/Icaro.svg";
+import IncompatibilidadeAlerta from "../../assets/videos/game/alerta_incompatibilidade.mp4";
+import { toast } from "react-toastify";
 
 /**
  * Página que executa o jogo. Só é acessível quando existem credenciais de
@@ -47,6 +50,7 @@ const Game = () => {
 
   const [logoutHover, setlogoutHover] = useState(false);
   const [logoutModal, setlogoutModal] = useState(false);
+  const [isCameraError, setIsCameraError] = useState(false);
 
   /**
    * Objeto da biblioteca 'react-unity-webgl'. Recebe as referências dos arquivos necessários
@@ -54,18 +58,36 @@ const Game = () => {
    * @constant Game/UnityContext
    */
   const unityContext = new UnityContext({
-    loaderUrl: "unity/react-build.loader.js",
-    dataUrl: "unity/react-build.data.unityweb",
-    frameworkUrl: "unity/react-build.framework.js.unityweb",
-    codeUrl: "unity/react-build.wasm.unityweb",
+    loaderUrl: "unity/libraske.loader.js",
+    dataUrl: "unity/libraske.data.unityweb",
+    frameworkUrl: "unity/libraske.framework.js.unityweb",
+    codeUrl: "unity/libraske.wasm.unityweb",
+    streamingAssetsUrl: "unity/streamingAssets",
   });
+
+   /**
+   * 
+   * As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
+   * 
+   * @param  {string}  REACT_APP_LOGIN_UNICO Endpoit do serviço login único (config.loginUnico).
+   * @param  {string}  REACT_APP_CLIENT_ID ID do client Libraskê; É necessário para redirecionamento pós autenticação (config.clientId).
+   * @param  {string}  REACT_APP_REDIRECT_URI URL de redirecionamento após sucesso no login (config.redirectUri).
+   * @function Game/Logout
+   */
+  const govAuthRedirect = () => {
+    sessionStorage.clear();
+    window.location.href = `${config.loginUnico}/authorize?response_type=code&amp;client_id=${config.clientId}&amp;scope=openid+email+phone+profile&amp;redirect_uri=${config.redirectUri}`;
+  }
 
   /**
    * Limpa as credencais de usuário armazenadas e o direciona para a página inicial da aplicação.
    * Caso o usuário esteja logado com a conta GOV, também realiza o logout no sistema Login Único,
    * sendo necessário abrir a URL do serviço em uma nova guia.
-   * @param  {string}  APP_LOGIN_UNICO Endpoit do serviço login único.
-   * @param  {string}  APP_LOGOUT_URI URL de redirecionamento necessária para logout no serviço Login Único.
+   * 
+   * As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
+   * 
+   * @param  {string}  REACT_APP_LOGIN_UNICO Endpoit do serviço login único (config.loginUnico).
+   * @param  {string}  REACT_APP_LOGOUT_URI URL de redirecionamento necessária para logout no serviço Login Único(config.logoutUri).
    * @function Game/Logout
    */
   const logout = () => {
@@ -73,7 +95,7 @@ const Game = () => {
 
     if (!auth.is_guest) {
       window.open(
-        `${process.env.REACT_APP_LOGIN_UNICO}/logout?post_logout_redirect_uri=${process.env.REACT_APP_LOGOUT_URI}`,
+        `${config.loginUnico}/logout?post_logout_redirect_uri=${config.logoutUri}`,
         "_blank"
       );
     }
@@ -101,8 +123,31 @@ const Game = () => {
         );
       }, 100);
     });
+
+
+    requestCameraAccess()
   }, []);
 
+  function getCameraError(err) {
+    switch (err.message) {
+      case 'Requested device not found':
+        return "Nenhuma câmera encontrada.";
+      default:
+        return "Acesso a câmera negado.";
+    }
+  }
+
+  function requestCameraAccess() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(() => setIsCameraError(false))
+      .catch((err) => {
+        const errorMessage = getCameraError(err);
+        setIsCameraError(errorMessage);
+        console.error(err)
+        toast.error(errorMessage);
+      }
+      );
+  }
   /**
    * Listener para a chamada da função Logout() na Unity, que deve
    * executar a função no React ao identificar chamada na Unity.
@@ -114,67 +159,98 @@ const Game = () => {
     });
   }, []);
 
+  /**
+   * Listener para a chamada da função GovAuthRedirect() na Unity, que deve
+   * executar a função no React ao identificar chamada na Unity.
+   * @function Game/useEffect=>govAuthRedirect
+   */
+  useEffect(() => {
+    unityContext.on("GovAuthRedirect", () => {
+      govAuthRedirect();
+    });
+  }, []);
+
+  const AccessModal = () => {
+    return &lt;div className="modal-wrapper" style={{ zIndex: '999' }}>
+      &lt;div id="warning-modal" className="camera-permission-modal" style={{ width: "80%", height: "80%" }}>
+        &lt;span>Não foi possível iniciar o jogo :(&lt;/span>
+        &lt;p>{isCameraError}&lt;/p>
+        &lt;button onClick={requestCameraAccess} className="fill-button">
+          Tentar novamente
+        &lt;/button>
+      &lt;/div>
+    &lt;/div>
+  }
+
+
   return (
-    &lt;div id="page-game">
-      {isBrowser &amp;&amp; (
-        &lt;>
-          &lt;Unity
-            unityContext={unityContext}
-            style={{ width: "100vw", height: "100vh" }}
-          />
-          &lt;div id="corner-items">
-            {logoutHover &amp;&amp; &lt;span className="logout-text">Sair&lt;/span>}
-            &lt;button
-              id="corner-button"
-              onClick={() => setlogoutModal(true)}
-              onMouseEnter={() => setlogoutHover(true)}
-              onMouseLeave={() => setlogoutHover(false)}
-            >
-              &lt;i className="logout-icon" />
-            &lt;/button>
-          &lt;/div>
-          {logoutModal &amp;&amp; (
-            &lt;div className="modal-wrapper">
-              &lt;div id="logout-modal">
-                &lt;span id="logout-title">DESEJA MESMO SAIR?&lt;/span>
-                &lt;div className="button-row">
-                  &lt;button className="fill-button" onClick={logout}>
-                    Sim
-                  &lt;/button>
-                  &lt;button
-                    className="fill-button"
-                    onClick={() => setlogoutModal(false)}
-                  >
-                    Não
-                  &lt;/button>
-                &lt;/div>
-              &lt;/div>
-            &lt;/div>
-          )}
-        &lt;/>
-      )}
-      {isMobile &amp;&amp; (
-        &lt;>
-          &lt;div className="modal-wrapper">
-            &lt;div id="warning-modal">
-              &lt;img id="Icaro" src={Icaro} alt="Icaro" />
-              &lt;span id="warning-title">ATENÇÃO&lt;/span>
-              &lt;span id="info-primary">
-                Olá, jogador. Este jogo ainda não é compatível com o seu
-                dispotivo.
-              &lt;/span>
-              &lt;span id="info-secondary">
-                O Libraskê foi otimizado para computadores. Por isso,{" "}
-                &lt;u>não é possível jogá-lo em um celular ou tablet.&lt;/u>
-              &lt;/span>
-              &lt;button className="fill-button" onClick={logout}>
-                Entendi
+    &lt;>
+      {isCameraError &amp;&amp; &lt;AccessModal />}
+
+      &lt;div id="page-game">
+        {isBrowser &amp;&amp; (
+          &lt;>
+            &lt;Unity
+              unityContext={unityContext}
+              style={{ width: "100vw", height: "100vh", display: !isCameraError ? "block" : "none" }}
+            />
+            &lt;div id="corner-items">
+              {logoutHover &amp;&amp; &lt;span className="logout-text">Sair&lt;/span>}
+              &lt;button
+                id="corner-button"
+                onClick={() => setlogoutModal(true)}
+                onMouseEnter={() => setlogoutHover(true)}
+                onMouseLeave={() => setlogoutHover(false)}
+              >
+                &lt;i className="logout-icon" />
               &lt;/button>
             &lt;/div>
-          &lt;/div>
-        &lt;/>
-      )}
-    &lt;/div>
+            {logoutModal &amp;&amp; (
+              &lt;div className="modal-wrapper">
+                &lt;div id="logout-modal">
+                  &lt;span id="logout-title">DESEJA MESMO SAIR?&lt;/span>
+                  &lt;div className="button-row">
+                    &lt;button className="fill-button" onClick={logout}>
+                      Sim
+                    &lt;/button>
+                    &lt;button
+                      className="fill-button"
+                      onClick={() => setlogoutModal(false)}
+                    >
+                      Não
+                    &lt;/button>
+                  &lt;/div>
+                &lt;/div>
+              &lt;/div>
+            )}
+          &lt;/>
+        )}
+        {isMobile &amp;&amp; (
+          &lt;>
+            &lt;div className="modal-wrapper">
+              &lt;div id="warning-modal">
+                &lt;div className="player-wrapper">
+                  &lt;ReactPlayer className='react-player' height="100%" url={IncompatibilidadeAlerta} playing muted loop />
+                &lt;/div>
+                &lt;span id="warning-title">ATENÇÃO&lt;/span>
+                &lt;span id="info-primary">
+                  Olá, jogador. Este jogo ainda não é compatível com o seu
+                  dispotivo.
+                &lt;/span>
+                &lt;span id="info-secondary">
+                  O Libraskê foi otimizado para computadores. Por isso,{" "}
+                  &lt;u>não é possível jogá-lo em um celular ou tablet.&lt;/u>
+                &lt;/span>
+                &lt;button className="fill-button" onClick={logout}>
+                  Entendi
+                &lt;/button>
+              &lt;/div>
+            &lt;/div>
+          &lt;/>
+        )}
+      &lt;/div>
+
+    &lt;/>
   );
 };
 
@@ -189,13 +265,13 @@ export default Game;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Access">Access</a></li><li><a href="global.html#Access/govAuth">Access/govAuth</a></li><li><a href="global.html#Access/guestAuth">Access/guestAuth</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Authorize">Authorize</a></li><li><a href="global.html#Authorize/authData">Authorize/authData</a></li><li><a href="global.html#Authorize/authorization">Authorize/authorization</a></li><li><a href="global.html#Authorize/useEffect">Authorize/useEffect</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Game">Game</a></li><li><a href="global.html#Game/Logout">Game/Logout</a></li><li><a href="global.html#Game/UnityContext">Game/UnityContext</a></li><li><a href="global.html#Game/useEffect=%253Eloaded">Game/useEffect=>loaded</a></li><li><a href="global.html#Game/useEffect=%253Elogout">Game/useEffect=>logout</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routes">Routes</a></li><li><a href="global.html#RouteWrapper">RouteWrapper</a></li><li><a href="global.html#store/authReducer">store/authReducer</a></li><li><a href="global.html#store/storeAuth">store/storeAuth</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Access">Access</a></li><li><a href="global.html#Access/govAuth">Access/govAuth</a></li><li><a href="global.html#Access/guestAuth">Access/guestAuth</a></li><li><a href="global.html#Access/playVideo">Access/playVideo</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Authorize">Authorize</a></li><li><a href="global.html#Authorize/authData.">Authorize/authData.</a></li><li><a href="global.html#Authorize/authorization">Authorize/authorization</a></li><li><a href="global.html#Authorize/useEffect">Authorize/useEffect</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#config">config</a></li><li><a href="global.html#Game">Game</a></li><li><a href="global.html#Game/Logout">Game/Logout</a></li><li><a href="global.html#Game/UnityContext">Game/UnityContext</a></li><li><a href="global.html#Game/useEffect=%253EgovAuthRedirect">Game/useEffect=>govAuthRedirect</a></li><li><a href="global.html#Game/useEffect=%253Eloaded">Game/useEffect=>loaded</a></li><li><a href="global.html#Game/useEffect=%253Elogout">Game/useEffect=>logout</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routes">Routes</a></li><li><a href="global.html#RouteWrapper">RouteWrapper</a></li><li><a href="global.html#store/authReducer">store/authReducer</a></li><li><a href="global.html#store/storeAuth">store/storeAuth</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Wed Oct 06 2021 20:46:47 GMT-0300 (GMT-03:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Jan 14 2026 12:15:23 GMT-0300 (Brasilia Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

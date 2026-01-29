@@ -46,7 +46,39 @@
 
 ## Documentação
 
-A documentação está incluída no código, com anotações em formato jsdoc. Também é possível visualizar a documentação completa ao abrir o arquivo `docs/global.html` em qualquer navegador.
+A documentação está incluída no código, com anotações em formato JSDoc.
+Também é possível visualizar a documentação completa ao abrir o arquivo `docs/global.html` em qualquer navegador.
+
+Sempre que houver mudanças nos comentários ou no código, a documentação
+pode ser regenerada automaticamente com:
+
+`yarn docs`
+
+Esse comando gera novamente os arquivos HTML dentro da pasta docs/,
+mantendo a documentação sincronizada com o código-fonte.
+
+<hr>
+
+### Variáveis de Ambiente
+
+As seguintes variáveis são utilizadas pela aplicação para configuração de autenticação e integração com serviços externos:
+
+| Variável                     | Descrição                                                                 |
+|------------------------------|---------------------------------------------------------------------------|
+| `REACT_APP_LOGIN_UNICO`      | URL base do serviço de autenticação (Login Único / SSO).                  |
+| `REACT_APP_CLIENT_ID`        | Identificador da aplicação no provedor de autenticação.                  |
+| `REACT_APP_REDIRECT_URI`     | URL de retorno utilizada após a autenticação do usuário.                 |
+| `REACT_APP_LOGOUT_URI`       | URL para onde o usuário é redirecionado após realizar logout.            |
+| `REACT_APP_API_URL`          | URL base da API backend consumida pela aplicação.                        |
+| `REACT_APP_API_REDIRECT_URI` | URL de retorno utilizada pela API no fluxo de autenticação.              |                   |
+
+Em desenvolvimento, os valores são lidos a partir do arquivo `.env`, seguindo o
+padrão do React (`REACT_APP_*`). O repositório inclui um `.env.example` como
+referência para configuração local.
+
+Em produção, essas variáveis são injetadas em runtime via `config.js`
+(`window.__ENV__`). Esse arquivo é gerado no startup do container pelo
+`ENTRYPOINT`, que executa o script `gen-config.sh`.
 
 <hr>
 

@@ -16,7 +16,7 @@ import LoginVisita from "../../assets/videos/login/login_visitante.mp4";
 import VisitaNome from "../../assets/videos/login/visita_nome.mp4";
 import VisitaEntrar from "../../assets/videos/login/visita_entrar.mp4";
 import VisitaAlerta from "../../assets/videos/login/visita_alerta.mp4";
-
+import { config } from "../../config";
 /**
  * Página de login. Apresenta ao usuário as opção de login
  * com conta GOV ou login como convidado.
@@ -27,23 +27,27 @@ const Access = () => {
 
   /**
    * Redireciona usuário para a página de login do serviço GOV.BR.
-   * Caso a operação seja bem sucedida, serviço retorna ao REDIRECT_URI com o código de acesso.
+   * Caso a operação seja bem sucedida, serviço retorna ao REACT_APP_REDIRECT_URI com o código de acesso.
+   * 
+   * As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
    *
-   * @param  {string}  APP_LOGIN_UNICO Endpoit do serviço login único.
-   * @param  {string}  REACT_APP_CLIENT_ID ID do client Libraskê; É necessário para redirecionamento pós autenticação.
-   * @param  {string}  REDIRECT_URI URL de redirecionamento após sucesso no login.
+   * @param  {string}  REACT_APP_LOGIN_UNICO Endpoit do serviço login único (config.loginUnico).
+   * @param  {string}  REACT_APP_CLIENT_ID ID do client Libraskê; É necessário para redirecionamento pós autenticação (config.clientId).
+   * @param  {string}  REACT_APP_REDIRECT_URI URL de redirecionamento após sucesso no login (config.redirectUri).
    * @function Access/govAuth
    */
   function govAuth() {
-    window.location.href = `${process.env.REACT_APP_LOGIN_UNICO}/authorize?response_type=code&client_id=${process.env.REACT_APP_CLIENT_ID}&scope=openid+email+phone+profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
+    window.location.href = `${config.loginUnico}/authorize?response_type=code&client_id=${config.clientId}&scope=openid+email+phone+profile&redirect_uri=${config.redirectUri}`;
   }
 
   /**
    * Autentica usuário convidado na API Libraskê, realizando requisição post na API. Caso seja realizada com
    * sucesso, as credenciais de usuário obtidas são armazenadas e o usuário é direcionado para o jogo. Caso a
    * requisição falhe, é exibida uma mensagem de erro ao usuário.
+   * 
+   * As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
    *
-   * @param  {string}  APP_API_URL - Endpoit da API Libraskê.
+   * @param  {string}  REACT_APP_API_URL - Endpoit da API Libraskê (config.apiUrl).
    * @param  {string}  guestName - Nome do usuário que deseja se autenticar como convidado.
    * @function Access/guestAuth
    */
@@ -52,7 +56,7 @@ const Access = () => {
       setLoading(true);
 
       axios
-        .post(`${process.env.REACT_APP_API_URL}/libraske/guest-auth`, {
+        .post(`${config.apiUrl}/libraske/guest-auth`, {
           guestName: guestName,
         })
         .then((response) => {

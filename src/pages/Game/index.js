@@ -5,8 +5,10 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Unity, { UnityContext } from "react-unity-webgl";
 import { isBrowser, isMobile } from "react-device-detect";
+import { config } from "../../config";
 
 import IncompatibilidadeAlerta from "../../assets/videos/game/alerta_incompatibilidade.mp4";
+import { toast } from "react-toastify";
 
 /**
  * Página que executa o jogo. Só é acessível quando existem credenciais de
@@ -20,6 +22,7 @@ const Game = () => {
 
   const [logoutHover, setlogoutHover] = useState(false);
   const [logoutModal, setlogoutModal] = useState(false);
+  const [isCameraError, setIsCameraError] = useState(false);
 
   /**
    * Objeto da biblioteca 'react-unity-webgl'. Recebe as referências dos arquivos necessários
@@ -34,17 +37,29 @@ const Game = () => {
     streamingAssetsUrl: "unity/streamingAssets",
   });
 
+   /**
+   * 
+   * As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
+   * 
+   * @param  {string}  REACT_APP_LOGIN_UNICO Endpoit do serviço login único (config.loginUnico).
+   * @param  {string}  REACT_APP_CLIENT_ID ID do client Libraskê; É necessário para redirecionamento pós autenticação (config.clientId).
+   * @param  {string}  REACT_APP_REDIRECT_URI URL de redirecionamento após sucesso no login (config.redirectUri).
+   * @function Game/Logout
+   */
   const govAuthRedirect = () => {
     sessionStorage.clear();
-    window.location.href = `${process.env.REACT_APP_LOGIN_UNICO}/authorize?response_type=code&client_id=${process.env.REACT_APP_CLIENT_ID}&scope=openid+email+phone+profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
+    window.location.href = `${config.loginUnico}/authorize?response_type=code&client_id=${config.clientId}&scope=openid+email+phone+profile&redirect_uri=${config.redirectUri}`;
   }
 
   /**
    * Limpa as credencais de usuário armazenadas e o direciona para a página inicial da aplicação.
    * Caso o usuário esteja logado com a conta GOV, também realiza o logout no sistema Login Único,
    * sendo necessário abrir a URL do serviço em uma nova guia.
-   * @param  {string}  APP_LOGIN_UNICO Endpoit do serviço login único.
-   * @param  {string}  APP_LOGOUT_URI URL de redirecionamento necessária para logout no serviço Login Único.
+   * 
+   * As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
+   * 
+   * @param  {string}  REACT_APP_LOGIN_UNICO Endpoit do serviço login único (config.loginUnico).
+   * @param  {string}  REACT_APP_LOGOUT_URI URL de redirecionamento necessária para logout no serviço Login Único(config.logoutUri).
    * @function Game/Logout
    */
   const logout = () => {
@@ -52,7 +67,7 @@ const Game = () => {
 
     if (!auth.is_guest) {
       window.open(
-        `${process.env.REACT_APP_LOGIN_UNICO}/logout?post_logout_redirect_uri=${process.env.REACT_APP_LOGOUT_URI}`,
+        `${config.loginUnico}/logout?post_logout_redirect_uri=${config.logoutUri}`,
         "_blank"
       );
     }
@@ -80,8 +95,31 @@ const Game = () => {
         );
       }, 100);
     });
+
+
+    requestCameraAccess()
   }, []);
 
+  function getCameraError(err) {
+    switch (err.message) {
+      case 'Requested device not found':
+        return "Nenhuma câmera encontrada.";
+      default:
+        return "Acesso a câmera negado.";
+    }
+  }
+
+  function requestCameraAccess() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(() => setIsCameraError(false))
+      .catch((err) => {
+        const errorMessage = getCameraError(err);
+        setIsCameraError(errorMessage);
+        console.error(err)
+        toast.error(errorMessage);
+      }
+      );
+  }
   /**
    * Listener para a chamada da função Logout() na Unity, que deve
    * executar a função no React ao identificar chamada na Unity.
@@ -104,69 +142,87 @@ const Game = () => {
     });
   }, []);
 
+  const AccessModal = () => {
+    return <div className="modal-wrapper" style={{ zIndex: '999' }}>
+      <div id="warning-modal" className="camera-permission-modal" style={{ width: "80%", height: "80%" }}>
+        <span>Não foi possível iniciar o jogo :(</span>
+        <p>{isCameraError}</p>
+        <button onClick={requestCameraAccess} className="fill-button">
+          Tentar novamente
+        </button>
+      </div>
+    </div>
+  }
+
+
   return (
-    <div id="page-game">
-      {isBrowser && (
-        <>
-          <Unity
-            unityContext={unityContext}
-            style={{ width: "100vw", height: "100vh" }}
-          />
-          <div id="corner-items">
-            {logoutHover && <span className="logout-text">Sair</span>}
-            <button
-              id="corner-button"
-              onClick={() => setlogoutModal(true)}
-              onMouseEnter={() => setlogoutHover(true)}
-              onMouseLeave={() => setlogoutHover(false)}
-            >
-              <i className="logout-icon" />
-            </button>
-          </div>
-          {logoutModal && (
-            <div className="modal-wrapper">
-              <div id="logout-modal">
-                <span id="logout-title">DESEJA MESMO SAIR?</span>
-                <div className="button-row">
-                  <button className="fill-button" onClick={logout}>
-                    Sim
-                  </button>
-                  <button
-                    className="fill-button"
-                    onClick={() => setlogoutModal(false)}
-                  >
-                    Não
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </>
-      )}
-      {isMobile && (
-        <>
-          <div className="modal-wrapper">
-            <div id="warning-modal">
-              <div className="player-wrapper">
-								<ReactPlayer className='react-player' height="100%" url={IncompatibilidadeAlerta} playing muted loop/>
-							</div>
-              <span id="warning-title">ATENÇÃO</span>
-              <span id="info-primary">
-                Olá, jogador. Este jogo ainda não é compatível com o seu
-                dispotivo.
-              </span>
-              <span id="info-secondary">
-                O Libraskê foi otimizado para computadores. Por isso,{" "}
-                <u>não é possível jogá-lo em um celular ou tablet.</u>
-              </span>
-              <button className="fill-button" onClick={logout}>
-                Entendi
+    <>
+      {isCameraError && <AccessModal />}
+
+      <div id="page-game">
+        {isBrowser && (
+          <>
+            <Unity
+              unityContext={unityContext}
+              style={{ width: "100vw", height: "100vh", display: !isCameraError ? "block" : "none" }}
+            />
+            <div id="corner-items">
+              {logoutHover && <span className="logout-text">Sair</span>}
+              <button
+                id="corner-button"
+                onClick={() => setlogoutModal(true)}
+                onMouseEnter={() => setlogoutHover(true)}
+                onMouseLeave={() => setlogoutHover(false)}
+              >
+                <i className="logout-icon" />
               </button>
             </div>
-          </div>
-        </>
-      )}
-    </div>
+            {logoutModal && (
+              <div className="modal-wrapper">
+                <div id="logout-modal">
+                  <span id="logout-title">DESEJA MESMO SAIR?</span>
+                  <div className="button-row">
+                    <button className="fill-button" onClick={logout}>
+                      Sim
+                    </button>
+                    <button
+                      className="fill-button"
+                      onClick={() => setlogoutModal(false)}
+                    >
+                      Não
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+        {isMobile && (
+          <>
+            <div className="modal-wrapper">
+              <div id="warning-modal">
+                <div className="player-wrapper">
+                  <ReactPlayer className='react-player' height="100%" url={IncompatibilidadeAlerta} playing muted loop />
+                </div>
+                <span id="warning-title">ATENÇÃO</span>
+                <span id="info-primary">
+                  Olá, jogador. Este jogo ainda não é compatível com o seu
+                  dispotivo.
+                </span>
+                <span id="info-secondary">
+                  O Libraskê foi otimizado para computadores. Por isso,{" "}
+                  <u>não é possível jogá-lo em um celular ou tablet.</u>
+                </span>
+                <button className="fill-button" onClick={logout}>
+                  Entendi
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
+    </>
   );
 };
 

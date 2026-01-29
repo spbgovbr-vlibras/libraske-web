@@ -29,16 +29,22 @@
             <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
 import "./styles.css";
 import axios from "axios";
+import ReactPlayer from "react-player";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { storeAuth } from "../../store/modules/auth/actions";
 import { toast } from "react-toastify";
 
 import Button from "../../components/Button";
-import Icaro from "../../assets/Icaro.svg";
 import GuestIcon from "../../assets/guest_icon.svg";
 import Loading from "../../assets/guest_loading.svg";
-
+import IconAtencao from "../../assets/icon_atencao.png";
+import LoginGov from "../../assets/videos/login/login_gov.mp4";
+import LoginVisita from "../../assets/videos/login/login_visitante.mp4";
+import VisitaNome from "../../assets/videos/login/visita_nome.mp4";
+import VisitaEntrar from "../../assets/videos/login/visita_entrar.mp4";
+import VisitaAlerta from "../../assets/videos/login/visita_alerta.mp4";
+import { config } from "../../config";
 /**
  * Página de login. Apresenta ao usuário as opção de login
  * com conta GOV ou login como convidado.
@@ -49,15 +55,17 @@ const Access = () => {
 
   /**
    * Redireciona usuário para a página de login do serviço GOV.BR.
-   * Caso a operação seja bem sucedida, serviço retorna ao REDIRECT_URI com o código de acesso.
+   * Caso a operação seja bem sucedida, serviço retorna ao REACT_APP_REDIRECT_URI com o código de acesso.
+   * 
+   * As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
    *
-   * @param  {string}  APP_LOGIN_UNICO Endpoit do serviço login único.
-   * @param  {string}  REACT_APP_CLIENT_ID ID do client Libraskê; É necessário para redirecionamento pós autenticação.
-   * @param  {string}  REDIRECT_URI URL de redirecionamento após sucesso no login.
+   * @param  {string}  REACT_APP_LOGIN_UNICO Endpoit do serviço login único (config.loginUnico).
+   * @param  {string}  REACT_APP_CLIENT_ID ID do client Libraskê; É necessário para redirecionamento pós autenticação (config.clientId).
+   * @param  {string}  REACT_APP_REDIRECT_URI URL de redirecionamento após sucesso no login (config.redirectUri).
    * @function Access/govAuth
    */
   function govAuth() {
-    window.location.href = `${process.env.REACT_APP_LOGIN_UNICO}/authorize?response_type=code&amp;client_id=${process.env.REACT_APP_CLIENT_ID}&amp;scope=openid+email+phone+profile&amp;redirect_uri=${process.env.REACT_APP_REDIRECT_URI}`;
+    window.location.href = `${config.loginUnico}/authorize?response_type=code&amp;client_id=${config.clientId}&amp;scope=openid+email+phone+profile&amp;redirect_uri=${config.redirectUri}`;
   }
 
   /**
@@ -65,7 +73,9 @@ const Access = () => {
    * sucesso, as credenciais de usuário obtidas são armazenadas e o usuário é direcionado para o jogo. Caso a
    * requisição falhe, é exibida uma mensagem de erro ao usuário.
    * 
-   * @param  {string}  APP_API_URL - Endpoit da API Libraskê.
+   * As variáveis de ambiente necessárias para a operação são lidas do arquivo de configuração src/config.js.
+   *
+   * @param  {string}  REACT_APP_API_URL - Endpoit da API Libraskê (config.apiUrl).
    * @param  {string}  guestName - Nome do usuário que deseja se autenticar como convidado.
    * @function Access/guestAuth
    */
@@ -74,7 +84,7 @@ const Access = () => {
       setLoading(true);
 
       axios
-        .post(`${process.env.REACT_APP_API_URL}/libraske/guest-auth`, {
+        .post(`${config.apiUrl}/libraske/guest-auth`, {
           guestName: guestName,
         })
         .then((response) => {
@@ -107,6 +117,21 @@ const Access = () => {
   const [loading, setLoading] = useState(false);
   const [guestName, setGuestName] = useState("");
 
+  const [displayedVideo, setDisplayedVideo] = useState(LoginGov);
+  const [playing, setPlaying] = useState(true);
+
+  /**
+   * Reproduz o vídeo enviado como parâmetro no player da página. Caso o vídeo passado seja o mesmo
+   * que está sendo reproduzido, a função só reinicia vídeo caso a reprodução atual tenha terminado.
+   *
+   * @param  {string}  video - Vídeo que deve ser reproduzido no player.
+   * @function Access/playVideo
+   */
+  function playVideo(video) {
+    setDisplayedVideo(video); 
+    setPlaying(true);
+  }
+
   function handleGuest() {
     setGuest(true);
   }
@@ -125,18 +150,25 @@ const Access = () => {
       &lt;span className="title">LIBRASKÊ&lt;/span>
       &lt;span className="subtitle">Karaokê em Libras&lt;/span>
       &lt;div className="main_login">
-        &lt;section className="icaro_container">
-          &lt;img src={Icaro} alt="Icaro" />
-        &lt;/section>
+        &lt;div className="player-wrapper">
+          &lt;ReactPlayer
+            className="react-player"
+            height="100%"
+            url={displayedVideo}
+            playing={playing}
+            onEnded={() => setPlaying(false)}
+            muted
+          />
+        &lt;/div>
         &lt;div>
           {!guest ? (
             &lt;>
               &lt;span>Acessar&lt;/span>
               &lt;div>
-                &lt;div onClick={govAuth}>
-                  &lt;Button text="Conta Gov.br" icon="GovIcon" />
+                &lt;div onClick={govAuth} onMouseOver={() => playVideo(LoginGov)}>
+                  &lt;Button text="Entrar com " icon="GovIcon" />
                 &lt;/div>
-                &lt;div onClick={handleGuest}>
+                &lt;div onClick={handleGuest} onMouseOver={() => playVideo(LoginVisita)}>
                   &lt;Button text="Visitante" icon="GuestIcon" />
                 &lt;/div>
               &lt;/div>
@@ -145,22 +177,22 @@ const Access = () => {
             &lt;>
               &lt;span>Visitante&lt;/span>
               &lt;form className="guest_container">
-                &lt;div className="guest_input">
+                &lt;div className="guest_input" onMouseOver={() => playVideo(VisitaNome)}>
                   &lt;img src={GuestIcon} alt="Ícone Convidado" />
                   &lt;input
                     required
                     placeholder="Digite seu nome"
-                    maxLength={15}
+                    maxLength={16}
                     value={guestName}
                     onInput={(e) => setGuestName(e.target.value)}
                     disabled={loading}
                   />
                 &lt;/div>
-                &lt;span>*Máximo de 15 caracteres&lt;/span>
+                &lt;span>*Máximo de 16 caracteres&lt;/span>
                 {loading ? (
                   &lt;img id="loading" src={Loading} alt="carregando" />
                 ) : (
-                  &lt;div onClick={guestAuth}>
+                  &lt;div onClick={guestAuth} onMouseOver={() => playVideo(VisitaEntrar)}>
                     &lt;Button text="Entrar" type="entrar" />
                   &lt;/div>
                 )}
@@ -170,14 +202,17 @@ const Access = () => {
         &lt;/div>
       &lt;/div>
       {guest &amp;&amp; (
-        &lt;div className="guest_mode">
-          &lt;div> No modo convidado sua pontuação não será armazenada. &lt;/div>
-          &lt;div>
-            {" "}
-            Para isso, utilize a conta &amp;nbsp;
-            &lt;span className="govbr" onClick={govAuth}>
-              GOV.BR
-            &lt;/span>
+        &lt;div className="guest_row" onMouseOver={() => playVideo(VisitaAlerta)}>
+          &lt;img src={IconAtencao} alt="Atenção" />
+          &lt;div className="guest_mode">
+            &lt;div> No modo convidado sua pontuação não será armazenada. &lt;/div>
+            &lt;div>
+              {" "}
+              Para isso, utilize a conta &amp;nbsp;
+              &lt;span className="govbr" onClick={govAuth}>
+                GOV.BR
+              &lt;/span>
+            &lt;/div>
           &lt;/div>
         &lt;/div>
       )}
@@ -199,13 +234,13 @@ export default Access;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Access">Access</a></li><li><a href="global.html#Access/govAuth">Access/govAuth</a></li><li><a href="global.html#Access/guestAuth">Access/guestAuth</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Authorize">Authorize</a></li><li><a href="global.html#Authorize/authData">Authorize/authData</a></li><li><a href="global.html#Authorize/authorization">Authorize/authorization</a></li><li><a href="global.html#Authorize/useEffect">Authorize/useEffect</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#Game">Game</a></li><li><a href="global.html#Game/Logout">Game/Logout</a></li><li><a href="global.html#Game/UnityContext">Game/UnityContext</a></li><li><a href="global.html#Game/useEffect=%253Eloaded">Game/useEffect=>loaded</a></li><li><a href="global.html#Game/useEffect=%253Elogout">Game/useEffect=>logout</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routes">Routes</a></li><li><a href="global.html#RouteWrapper">RouteWrapper</a></li><li><a href="global.html#store/authReducer">store/authReducer</a></li><li><a href="global.html#store/storeAuth">store/storeAuth</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Access">Access</a></li><li><a href="global.html#Access/govAuth">Access/govAuth</a></li><li><a href="global.html#Access/guestAuth">Access/guestAuth</a></li><li><a href="global.html#Access/playVideo">Access/playVideo</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#Authorize">Authorize</a></li><li><a href="global.html#Authorize/authData.">Authorize/authData.</a></li><li><a href="global.html#Authorize/authorization">Authorize/authorization</a></li><li><a href="global.html#Authorize/useEffect">Authorize/useEffect</a></li><li><a href="global.html#Button">Button</a></li><li><a href="global.html#config">config</a></li><li><a href="global.html#Game">Game</a></li><li><a href="global.html#Game/Logout">Game/Logout</a></li><li><a href="global.html#Game/UnityContext">Game/UnityContext</a></li><li><a href="global.html#Game/useEffect=%253EgovAuthRedirect">Game/useEffect=>govAuthRedirect</a></li><li><a href="global.html#Game/useEffect=%253Eloaded">Game/useEffect=>loaded</a></li><li><a href="global.html#Game/useEffect=%253Elogout">Game/useEffect=>logout</a></li><li><a href="global.html#Home">Home</a></li><li><a href="global.html#Routes">Routes</a></li><li><a href="global.html#RouteWrapper">RouteWrapper</a></li><li><a href="global.html#store/authReducer">store/authReducer</a></li><li><a href="global.html#store/storeAuth">store/storeAuth</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.7</a> on Wed Oct 06 2021 20:46:47 GMT-0300 (GMT-03:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.11</a> on Wed Jan 14 2026 12:15:23 GMT-0300 (Brasilia Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

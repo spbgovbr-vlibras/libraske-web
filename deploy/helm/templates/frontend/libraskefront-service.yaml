@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "libraskefront-name.fullname" . }}
+  labels:
+    {{ include "libraskefront.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.libraskefront.service.type }}
+  ports:
+  - port: {{ .Values.libraskefront.service.port }}
+    name: http
+    targetPort: {{ .Values.libraskefront.service.port }}
+    protocol: TCP
+  selector:
+    {{ include "libraskefront.labels" . | indent 4 }}
