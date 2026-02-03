@@ -1,5 +1,5 @@
 # ---------- Build stage ----------
-FROM node:24-alpine AS build
+FROM node:24-alpine3.23 AS build
 
 WORKDIR /app
 
@@ -12,7 +12,7 @@ COPY . .
 RUN yarn build
 
 # ---------- Runtime stage ----------
-FROM nginx:1.29.3-alpine-slim
+FROM nginx:1.29-alpine3.23-perl
 
 # Copia sua configuração
 COPY nginx.conf /etc/nginx/conf.d/default.conf
